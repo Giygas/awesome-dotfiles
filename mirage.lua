@@ -32,7 +32,7 @@ mirage.initialize = function()
 
    -- Import panels
    local left_panel = require("components.mirage.left-panel")
-   local top_panel = require("components.pastel.top-panel")
+   local top_panel = require("components.mirage.top-panel")
 
    local icon_dir = gears.filesystem.get_configuration_dir() .. "/icons/tags/mirage/"
    -- Set up each screen (add tags & panels)

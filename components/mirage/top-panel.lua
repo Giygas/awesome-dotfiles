@@ -20,6 +20,8 @@ local dpi = beautiful.xresources.apply_dpi
 -- define module table
 local top_panel = {}
 
+local task_list = require("widgets.task-list")
+
 
 -- ===================================================================
 -- Bar Creation
@@ -47,13 +49,15 @@ top_panel.create = function(s)
       expand = "none",
       layout = wibox.layout.align.horizontal,
       nil,
+      -- task_list.create(s),
       require("widgets.calendar").create(s),
       {
          layout = wibox.layout.fixed.horizontal,
          wibox.layout.margin(wibox.widget.systray(), dpi(5), dpi(5), dpi(5), dpi(5)),
          require("widgets.bluetooth"),
          require("widgets.network")(),
-         require("widgets.battery")
+         require("widgets.battery"),
+         nil
       }
    }
 

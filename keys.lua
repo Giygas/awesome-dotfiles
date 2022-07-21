@@ -150,8 +150,7 @@ keys.globalkeys = gears.table.join(
       {description = "application launcher", group = "launcher"}
    ),
    
-   -- Custom keybinds
-
+   -- launch firefox   
    awful.key({ modkey, }, "w",
       function()
          awful.util.spawn("firefox")
@@ -159,6 +158,7 @@ keys.globalkeys = gears.table.join(
       {description = "Open Firefox", group = "Applications"}
    ),
 
+   -- lauch file explorer
    awful.key({ modkey }, "e",
       function()
          awful.util.spawn("nautilus") 
@@ -600,6 +600,17 @@ for i = 1, 9 do
             end
          end,
          {description = "view tag #"..i, group = "tag"}
+      ),
+      -- Toggle tag in current tag
+      awful.key ({modkey, "Control" }, "#" .. i + 9,
+         function ()
+             local screen = awful.screen.focused()
+             local tag = screen.tags[i]
+             if tag then
+               awful.tag.viewtoggle(tag)
+             end
+         end,
+         {description = "toggle tag #"..i, group = "tag"}
       ),
       -- Move client to tag
       awful.key({modkey, "Shift"}, "#" .. i + 9,
