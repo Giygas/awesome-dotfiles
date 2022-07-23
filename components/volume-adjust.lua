@@ -84,10 +84,22 @@ local hide_volume_adjust = gears.timer {
 -- show volume-adjust when "volume_change" signal is emitted
 awesome.connect_signal("volume_change",
    function()
+      local mute_status
+      -- check for muted or not
+      awful.spawn.easy_async_with_shell(
+         "amixer get Master | tail -2 | grep -c '\\[on\\]'",
+         function(out)
+            mute_status = tonumber(out)
+         end,
+         false
+      )
       -- set new volume value
       awful.spawn.easy_async_with_shell(
          "amixer sget Master | awk -F '[][]' '{print $2}'| sed 's/[^0-9]//g'",
          function(stdout)
+            if (mute_status == 0) then
+               awful.spawn.easy_async("amixer -c 0 set Master toggle", false)
+            end
             local volume_level = tonumber(stdout)
             volume_bar.value = volume_level
             if (volume_level > 40) then
@@ -114,18 +126,16 @@ awesome.connect_signal("volume_change",
 -- show volume-adjust when "volume_mute" signal is emitted
 awesome.connect_signal("volume_mute",
    function()
-      -- set new volume value
+      -- toggle mute
       awful.spawn.easy_async_with_shell(
-         'amixer -c 0 get Master | grep -q on',
-         function(EXIT_CODE)
-            if EXIT_CODE == 0 then
+         "amixer get Master | tail -2 | grep -c '\\[on\\]'",
+         function(stdout)
+            local out = tonumber(stdout)
+            if (out == 0) then
+               volume_bar.value = 0
                volume_icon:set_image(icon_dir .. "volume-off.png")
             else
-               naughty.notification { message = stdout }
-               naughty.notification { message = stderr }
-               naughty.notification { message = EXIT_CODE }
-               volume_icon:set_image(icon_dir .. "volume.png")
-
+               awesome.emit_signal("volume_change")
             end
          end,
          false
