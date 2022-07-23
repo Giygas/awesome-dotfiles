@@ -10,6 +10,9 @@
 -- Initialization
 -- ===================================================================
 
+-- test delete after
+local naughty = require("naughty")
+--delete
 
 local wibox = require("wibox")
 local awful = require("awful")
@@ -93,6 +96,34 @@ awesome.connect_signal("volume_change",
                volume_icon:set_image(icon_dir .. "volume-low.png")
             else
                volume_icon:set_image(icon_dir .. "volume-off.png")
+            end
+         end,
+         false
+      )
+
+      -- make volume_adjust component visible
+      if volume_adjust.visible then
+         hide_volume_adjust:again()
+      else
+         volume_adjust.visible = true
+         hide_volume_adjust:start()
+      end
+   end
+)
+
+-- show volume-adjust when "volume_mute" signal is emitted
+awesome.connect_signal("volume_mute",
+   function()
+      -- set new volume value
+      awful.spawn.easy_async_with_shell(
+         'amixer -c 0 get Master | grep -q on',
+         function(exit_code)
+            if exit_code == 0 then
+               volume_icon:set_image(icon_dir .. "volume-off.png")
+            else
+               naughty.notification { message = stdout }
+               volume_icon:set_image(icon_dir .. "volume.png")
+
             end
          end,
          false

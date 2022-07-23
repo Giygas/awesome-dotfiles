@@ -202,7 +202,7 @@ keys.globalkeys = gears.table.join(
    awful.key({}, "XF86AudioMute",
       function()
          awful.spawn("amixer -c 0 set Master toggle", false)
-         awesome.emit_signal("volume_change")
+         awesome.emit_signal("volume_mute")
       end,
       {description = "toggle mute", group = "hotkeys"}
    ),
@@ -231,7 +231,21 @@ keys.globalkeys = gears.table.join(
          awful.util.spawn(apps.screenshot, false)
       end
    ),
+   
+   --F11 and F12 keys
+   awful.key({}, "XF86Launch1",
+      function()
+         awful.util.spawn(apps.screenshot, false)
+      end
+   ),
+   
+   awful.key({}, "XF86Launch2",
+      function()
+         awful.util.spawn(apps.screenshot, false)
+      end
+   ),
 
+   
    -- =========================================
    -- RELOAD / QUIT AWESOME
    -- =========================================
