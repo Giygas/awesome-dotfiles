@@ -117,11 +117,13 @@ awesome.connect_signal("volume_mute",
       -- set new volume value
       awful.spawn.easy_async_with_shell(
          'amixer -c 0 get Master | grep -q on',
-         function(exit_code)
-            if exit_code == 0 then
+         function(EXIT_CODE)
+            if EXIT_CODE == 0 then
                volume_icon:set_image(icon_dir .. "volume-off.png")
             else
                naughty.notification { message = stdout }
+               naughty.notification { message = stderr }
+               naughty.notification { message = EXIT_CODE }
                volume_icon:set_image(icon_dir .. "volume.png")
 
             end
