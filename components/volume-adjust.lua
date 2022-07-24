@@ -20,7 +20,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 
-local offsetx = dpi(56)
+local offsetx = dpi(60)
 local offsety = dpi(300)
 local screen = awful.screen.focused()
 local icon_dir = gears.filesystem.get_configuration_dir() .. "/icons/volume/" .. beautiful.name .. "/"
@@ -84,22 +84,25 @@ local hide_volume_adjust = gears.timer {
 -- show volume-adjust when "volume_change" signal is emitted
 awesome.connect_signal("volume_change",
    function()
+      -- get mute status
       local mute_status
-      -- check for muted or not
+      -- amixer -D pulse set Master 1+ toggle
       awful.spawn.easy_async_with_shell(
-         "amixer get Master | tail -2 | grep -c '\\[on\\]'",
+         "amixer get Master | grep -P '\\[o.{1,2}\\]' -m 1 -o | grep -c 'on'",
          function(out)
             mute_status = tonumber(out)
          end,
          false
       )
+      
       -- set new volume value
       awful.spawn.easy_async_with_shell(
-         "amixer sget Master | awk -F '[][]' '{print $2}'| sed 's/[^0-9]//g'",
+         "amixer get Master | grep -P '\\[\\d{1,3}%\\]' -m 1 -o | sed 's/[^0-9]//g'",
          function(stdout)
             if (mute_status == 0) then
-               awful.spawn.easy_async("amixer -c 0 set Master toggle", false)
+               awful.spawn.easy_async("pactl -- set-sink-mute 0 toggle", false)
             end
+            naughty.notify({ title = "Achtung!", text = stdout, timeout = 1 })
             local volume_level = tonumber(stdout)
             volume_bar.value = volume_level
             if (volume_level > 40) then
@@ -128,7 +131,7 @@ awesome.connect_signal("volume_mute",
    function()
       -- toggle mute
       awful.spawn.easy_async_with_shell(
-         "amixer get Master | tail -2 | grep -c '\\[on\\]'",
+         "amixer get Master | grep -P '\\[o.{1,2}\\]' -m 1 -o | grep -c 'on'",
          function(stdout)
             local out = tonumber(stdout)
             if (out == 0) then
