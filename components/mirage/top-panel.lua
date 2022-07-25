@@ -57,6 +57,18 @@ top_panel.create = function(s)
          require("widgets.bluetooth"),
          require("widgets.network")(),
          require("widgets.battery"),
+         weather_widget({
+            api_key='593a284f5bb5b35e0cd2213a2b39d9eb',
+            coordinates = {45.5017, -73.5673},
+            time_format_12h = false,
+            units = 'metric',
+            both_units_widget = false,
+            font_name = 'SF Pro',
+            icons = 'VitalyGorbachev',
+            icons_extension = '.svg',
+            show_hourly_forecast = true,
+            show_daily_forecast = true,
+        }),
          layout = wibox.layout.fixed.horizontal,
       },
    }
