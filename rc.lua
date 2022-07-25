@@ -32,7 +32,7 @@ apps = {
    terminal = "konsole",
    launcher = "rofi -normal-window -modi drun -show drun -theme " .. theme_config_dir .. "rofi.rasi",
    lock = "i3lock",
-   screenshot = "scrot -e 'mv $f ~/Pictures/ 2>/dev/null'",
+   screenshot = "scrot -e 'mv $f ~/Pictures/Screenshots 2>/dev/null'",
    filebrowser = "nautilus"
 }
 

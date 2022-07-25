@@ -97,7 +97,7 @@ awesome.connect_signal("volume_change",
       
       -- set new volume value
       awful.spawn.easy_async_with_shell(
-         "amixer get Master | grep -P '\\[\\d{1,3}%\\]' -m 1 -o | sed 's/[^0-9]//g'",
+         "amixer -D pulse get Master | grep -P '\\[\\d{1,3}%\\]' -m 1 -o | sed 's/[^0-9]//g'",
          function(stdout)
             if (mute_status == 0) then
                awful.spawn.easy_async("pactl -- set-sink-mute 0 toggle", false)

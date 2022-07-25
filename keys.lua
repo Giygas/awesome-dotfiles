@@ -24,8 +24,6 @@ local altkey = "Mod1"
 -- define module table
 local keys = {}
 
-local volume_widget = require("widgets/volume-widget.volume")
-
 -- ===================================================================
 -- Movement Functions (Called by some keybinds)
 -- ===================================================================
@@ -188,14 +186,14 @@ keys.globalkeys = gears.table.join(
    -- ALSA volume control
    awful.key({}, "XF86AudioRaiseVolume",
       function()
-         volume:inc_volume_cmd()
+         awful.spawn.with_shell("pactl set-sink-volume 0 +2500")
          awesome.emit_signal("volume_change")
       end,
       {description = "volume up", group = "hotkeys"}
    ),
    awful.key({}, "XF86AudioLowerVolume",
       function()
-         volume_widget:DEC_VOLUME_CMD()
+         awful.spawn.with_shell("pactl set-sink-volume 0 -2500")
          awesome.emit_signal("volume_change")
       end,
       {description = "volume down", group = "hotkeys"}

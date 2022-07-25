@@ -16,11 +16,22 @@ local watch = require("awful.widget.watch")
 local utils = require("widgets/volume-widget.utils")
 
 
-local LIST_DEVICES_CMD = [[sh -c "pactl list sinks; pactl list sources"]]
-local function GET_VOLUME_CMD(device) return 'amixer -D ' .. device .. ' sget Master' end
-local function INC_VOLUME_CMD(device, step) return 'amixer -D ' .. device .. ' sset Master ' .. step .. '%+' end
-local function DEC_VOLUME_CMD(device, step) return 'amixer -D ' .. device .. ' sset Master ' .. step .. '%-' end
-local function TOG_VOLUME_CMD(device) return 'amixer -D ' .. device .. ' sset Master toggle' end
+
+--local LIST_DEVICES_CMD = [[sh -c "pactl list short sinks; pactl list short sources"]]
+local LIST_SINKS_CMD = "pactl list short sinks"
+local LIST_SOURCES_CMD = "pactl list short sources"
+local GET_DEFAULT_SINK_CMD = "pactl get-default-sink"
+local GET_DEFAULT_SOURCE_CMD = "pactl get-default-source"
+local TOG_VOLUME_CMD = 'pactl set-sink-mute 0 toggle'
+--local function GET_VOLUME_CMD(device) return 'amixer -D ' .. device .. ' sget Master' end
+local GET_VOLUME_CMD = 'pactl get-sink-volume 0'
+local GET_MUTE_CMD =  'pactl get-sink-mute 0'
+
+local function INC_VOLUME_CMD(step)
+    return 'pactl set-sink-volume 0 +' .. step .. '%' 
+end
+
+local function DEC_VOLUME_CMD(step) return 'pactl set-sink-volume 0 -' .. step .. '%' end
 
 
 local widget_types = {
@@ -46,14 +57,6 @@ local popup = awful.popup{
     widget = {}
 }
 
-local function build_main_line(device)
-    if device.active_port ~= nil and device.ports[device.active_port] ~= nil then
-        return device.properties.device_description .. ' · ' .. device.ports[device.active_port]
-    else
-        return device.properties.device_description
-    end
-end
-
 local function build_rows(devices, on_checkbox_click, device_type)
     local device_rows  = { layout = wibox.layout.fixed.vertical }
     for _, device in pairs(devices) do
@@ -70,6 +73,7 @@ local function build_rows(devices, on_checkbox_click, device_type)
         }
 
         checkbox:connect_signal("button::press", function()
+            --spawn.easy_async(string.format([[sh -c 'pacmd set-default-%s "%s"']], device_type, device.name), function()
             spawn.easy_async(string.format([[sh -c 'pactl set-default-%s "%s"']], device_type, device.name), function()
                 on_checkbox_click()
             end)
@@ -85,7 +89,8 @@ local function build_rows(devices, on_checkbox_click, device_type)
                     },
                     {
                         {
-                            text = build_main_line(device),
+                            --text = build_main_line(device),
+                            text = device.name,
                             align = 'left',
                             widget = wibox.widget.textbox
                         },
@@ -119,6 +124,7 @@ local function build_rows(devices, on_checkbox_click, device_type)
         end)
 
         row:connect_signal("button::press", function()
+            --spawn.easy_async(string.format([[sh -c 'pacmd set-default-%s "%s"']], device_type, device.name), function()
             spawn.easy_async(string.format([[sh -c 'pactl set-default-%s "%s"']], device_type, device.name), function()
                 on_checkbox_click()
             end)
@@ -143,18 +149,56 @@ local function build_header_row(text)
 end
 
 local function rebuild_popup()
-    spawn.easy_async(LIST_DEVICES_CMD, function(stdout)
+    --spawn.easy_async(LIST_DEVICES_CMD, function(stdout)
 
-        local sinks, sources = utils.extract_sinks_and_sources(stdout)
+    --    local sinks, sources = utils.extract_sinks_and_sources(stdout)
 
-        for i = 0, #rows do rows[i]=nil end
+    --    for i = 0, #rows do rows[i]=nil end
 
-        table.insert(rows, build_header_row("SINKS"))
-        table.insert(rows, build_rows(sinks, function() rebuild_popup() end, "sinks"))
-        table.insert(rows, build_header_row("SOURCES"))
-        table.insert(rows, build_rows(sources, function() rebuild_popup() end, "sources"))
+    --    table.insert(rows, build_header_row("SINKS"))
+    --    table.insert(rows, build_rows(sinks, function() rebuild_popup() end, "sink"))
+    --    table.insert(rows, build_header_row("SOURCES"))
+    --    table.insert(rows, build_rows(sources, function() rebuild_popup() end, "source"))
 
-        popup:setup(rows)
+    --    popup:setup(rows)
+    --end)
+    local count = 0
+    local sinks
+    local sources
+    local default_sink
+    local default_source
+    local function try_setup()
+        count = count + 1
+        if count == 4 then
+            for _, sink in pairs(sinks) do
+                sink.is_default = sink.name == default_sink
+            end
+            for _, source in pairs(sources) do
+                source.is_default = source.name == default_source
+            end
+            for i = 0, #rows do rows[i]=nil end
+            table.insert(rows, build_header_row("SINKS"))
+            table.insert(rows, build_rows(sinks, function() rebuild_popup() end, "sink"))
+            table.insert(rows, build_header_row("SOURCES"))
+            table.insert(rows, build_rows(sources, function() rebuild_popup() end, "source"))
+            popup:setup(rows)
+        end
+    end
+    spawn.easy_async(LIST_SINKS_CMD, function(stdout)
+        sinks = utils.extract_pactl_devices(stdout)
+        try_setup()
+    end)
+    spawn.easy_async(LIST_SOURCES_CMD, function(stdout)
+        sources = utils.extract_pactl_devices(stdout)
+        try_setup()
+    end)
+    spawn.easy_async(GET_DEFAULT_SINK_CMD, function(stdout)
+        default_sink = utils.trim(stdout)
+        try_setup()
+    end)
+    spawn.easy_async(GET_DEFAULT_SOURCE_CMD, function(stdout)
+        default_source = utils.trim(stdout)
+        try_setup()
     end)
 end
 
@@ -167,7 +211,6 @@ local function worker(user_args)
     local widget_type = args.widget_type
     local refresh_rate = args.refresh_rate or 1
     local step = args.step or 5
-    local device = args.device or 'pulse'
 
     if widget_types[widget_type] == nil then
         volume.widget = widget_types['icon_and_text'].get_widget(args.icon_and_text_args)
@@ -175,31 +218,21 @@ local function worker(user_args)
         volume.widget = widget_types[widget_type].get_widget(args)
     end
 
-    local function update_graphic(widget, stdout)
-        local mute = string.match(stdout, "%[(o%D%D?)%]")   -- \[(o\D\D?)\] - [on] or [off]
-        if mute == 'off' then widget:mute()
-        elseif mute == 'on' then widget:unmute()
-        end
-        local volume_level = string.match(stdout, "(%d?%d?%d)%%") -- (\d?\d?\d)\%)
-        volume_level = string.format("% 3d", volume_level)
-        widget:set_volume_level(volume_level)
-    end
-
     function volume:inc(s)
-        spawn.easy_async(INC_VOLUME_CMD(device, s or step), function(stdout) update_graphic(volume.widget, stdout) end)
+        spawn.spawn(INC_VOLUME_CMD(s or step))
     end
 
     function volume:dec(s)
-        spawn.easy_async(DEC_VOLUME_CMD(device, s or step), function(stdout) update_graphic(volume.widget, stdout) end)
+        spawn.spawn(DEC_VOLUME_CMD(s or step))
     end
 
     function volume:toggle()
-        spawn.easy_async(TOG_VOLUME_CMD(device), function(stdout) update_graphic(volume.widget, stdout) end)
+        spawn.spawn(TOG_VOLUME_CMD)
     end
 
     function volume:mixer()
         if mixer_cmd then
-            spawn.easy_async(mixer_cmd)
+            spawn.spawn(TOG_VOLUME_CMD)
         end
     end
 
@@ -220,7 +253,24 @@ local function worker(user_args)
             )
     )
 
-    watch(GET_VOLUME_CMD(device), refresh_rate, update_graphic, volume.widget)
+    local mute
+    local volume_level
+    watch(GET_MUTE_CMD, refresh_rate, function (widget, stdout)
+        mute = string.match(stdout, "Mute: (%D%D%D?)")   -- Mute: yes/no
+        if mute == 'yes' then widget:mute()
+        elseif mute == 'no' then widget:unmute()
+        end
+        if volume_level ~= nil then
+            widget:set_volume_level(volume_level)
+        end
+    end, volume.widget)
+    watch(GET_VOLUME_CMD, refresh_rate, function (widget, stdout)
+        local v = string.match(stdout, "(%d?%d?%d)%%") -- (\d?\d?\d)\%)
+        if v ~= nil then
+            volume_level = string.format("% 3d", v)
+            widget:set_volume_level(volume_level)
+        end
+    end, volume.widget)
 
     return volume.widget
 end
