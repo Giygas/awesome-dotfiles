@@ -24,7 +24,7 @@ local home_dir = os.getenv("HOME")
 
 -- define module table
 local left_panel = {}
-
+local cpu_widget = require("widgets.cpu-widget.cpu-widget")
 
 -- ===================================================================
 -- Bar Creation
@@ -64,7 +64,12 @@ left_panel.create = function(s)
          layout = wibox.layout.fixed.vertical,
          wibox.layout.margin(tag_list.create(s), dpi(5), dpi(5), 0, 0)
       },
-      nil
+      cpu_widget ({
+         width = 70,
+         step_width = 3,
+         step_spacing = 0,
+         color = '#FFFFAAFF'
+      })
    }
 
   

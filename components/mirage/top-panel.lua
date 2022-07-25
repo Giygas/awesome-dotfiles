@@ -21,9 +21,10 @@ local dpi = beautiful.xresources.apply_dpi
 local top_panel = {}
 
 
-local task_list = require("widgets.task-list")
 -- define widgets
+local task_list = require("widgets.task-list")
 local volume_widget = require("widgets.volume-widget.volume")
+
 
 
 -- ===================================================================
@@ -61,6 +62,7 @@ top_panel.create = function(s)
             step = 5,
             device = 'pulse'
          },
+         
          require("widgets.bluetooth"),
          require("widgets.network")(),
          require("widgets.battery"),
