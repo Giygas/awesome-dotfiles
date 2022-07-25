@@ -60,7 +60,7 @@ theme.taglist_bg_empty = theme.bg_dark
 theme.taglist_bg_occupied = theme.bg_dark
 theme.taglist_bg_urgent = "#e91e6399"
 theme.taglist_bg_focus = theme.bg_dark
-theme.taglist_spacing = dpi(25)
+theme.taglist_spacing = dpi(10)
 
 -- Tasklist
 theme.tasklist_font = theme.font
@@ -74,7 +74,7 @@ theme.tasklist_fg_urgent = theme.fg_urgent
 theme.tasklist_fg_normal = theme.fg_normal
 
 -- Panel Sizing
-theme.left_panel_width = dpi(50)
+theme.left_panel_width = dpi(40)
 theme.top_panel_height = dpi(35)
 
 -- Notification Sizing
