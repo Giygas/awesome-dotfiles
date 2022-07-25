@@ -10,6 +10,9 @@
 local gears = require("gears")
 local awful = require("awful")
 
+brightness_widget = require("widgets.brightness-widget.brightness")
+volume_widget = require("widgets.volume-widget.volume")
+
 
 -- ===================================================================
 -- User Configuration

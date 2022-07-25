@@ -59,7 +59,7 @@ left_panel.create = function(s)
    panel:setup {
       expand = "none",
       layout = wibox.layout.align.vertical,
-      wibox.layout.margin(require("widgets.layout-box"), dpi(13), dpi(13), dpi(13), dpi(13)),
+      wibox.layout.margin(require("widgets.layout-box"), dpi(5), dpi(5), dpi(5), dpi(5)),
       {
          layout = wibox.layout.fixed.vertical,
          wibox.layout.margin(tag_list.create(s), dpi(0), dpi(0), 0, 0)
@@ -69,7 +69,7 @@ left_panel.create = function(s)
          step_width = 3,
          step_spacing = 0,
          color = '#FFFFAAFF'
-      })
+      }),
    }
 
   

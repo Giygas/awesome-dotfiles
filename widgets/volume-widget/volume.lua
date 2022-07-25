@@ -28,10 +28,10 @@ local GET_VOLUME_CMD = 'pactl get-sink-volume 0'
 local GET_MUTE_CMD =  'pactl get-sink-mute 0'
 
 local function INC_VOLUME_CMD(step)
-    return 'pactl set-sink-volume 0 +' .. step .. '%' 
+    return 'pactl set-sink-volume 0 +' .. step .. '' 
 end
 
-local function DEC_VOLUME_CMD(step) return 'pactl set-sink-volume 0 -' .. step .. '%' end
+local function DEC_VOLUME_CMD(step) return 'pactl set-sink-volume 0 -' .. step .. '' end
 
 
 local widget_types = {

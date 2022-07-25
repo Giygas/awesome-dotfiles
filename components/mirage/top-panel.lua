@@ -23,7 +23,6 @@ local top_panel = {}
 
 -- define widgets
 local task_list = require("widgets.task-list")
-local volume_widget = require("widgets.volume-widget.volume")
 
 
 
@@ -57,12 +56,16 @@ top_panel.create = function(s)
       {
          layout = wibox.layout.fixed.horizontal,
          -- wibox.layout.margin(wibox.widget.systray(), dpi(5), dpi(5), dpi(5), dpi(5)),
+         brightness_widget{
+            type = 'arc',
+            program = 'light',
+            step = 2,      
+            step = 5,  
+        },
          volume_widget {
-            widget_type = 'icon and text',
-            step = 5,
+            widget_type = 'arc',
             device = 'pulse'
          },
-         
          require("widgets.bluetooth"),
          require("widgets.network")(),
          require("widgets.battery"),
