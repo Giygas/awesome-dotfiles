@@ -13,10 +13,10 @@ local spawn = require("awful.spawn")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local watch = require("awful.widget.watch")
-local utils = require("awesome-wm-widgets.volume-widget.utils")
+local utils = require("widgets/volume-widget.utils")
 
 
-local LIST_DEVICES_CMD = [[sh -c "pacmd list-sinks; pacmd list-sources"]]
+local LIST_DEVICES_CMD = [[sh -c "pactl list sinks; pactl list sources"]]
 local function GET_VOLUME_CMD(device) return 'amixer -D ' .. device .. ' sget Master' end
 local function INC_VOLUME_CMD(device, step) return 'amixer -D ' .. device .. ' sset Master ' .. step .. '%+' end
 local function DEC_VOLUME_CMD(device, step) return 'amixer -D ' .. device .. ' sset Master ' .. step .. '%-' end
@@ -24,11 +24,11 @@ local function TOG_VOLUME_CMD(device) return 'amixer -D ' .. device .. ' sset Ma
 
 
 local widget_types = {
-    icon_and_text = require("awesome-wm-widgets.volume-widget.widgets.icon-and-text-widget"),
-    icon = require("awesome-wm-widgets.volume-widget.widgets.icon-widget"),
-    arc = require("awesome-wm-widgets.volume-widget.widgets.arc-widget"),
-    horizontal_bar = require("awesome-wm-widgets.volume-widget.widgets.horizontal-bar-widget"),
-    vertical_bar = require("awesome-wm-widgets.volume-widget.widgets.vertical-bar-widget")
+    icon_and_text = require("widgets.volume-widget.widgets.icon-and-text-widget"),
+    icon = require("widgets.volume-widget.widgets.icon-widget"),
+    arc = require("widgets.volume-widget.widgets.arc-widget"),
+    horizontal_bar = require("widgets.volume-widget.widgets.horizontal-bar-widget"),
+    vertical_bar = require("widgets.volume-widget.widgets.vertical-bar-widget")
 }
 local volume = {}
 
@@ -70,7 +70,7 @@ local function build_rows(devices, on_checkbox_click, device_type)
         }
 
         checkbox:connect_signal("button::press", function()
-            spawn.easy_async(string.format([[sh -c 'pacmd set-default-%s "%s"']], device_type, device.name), function()
+            spawn.easy_async(string.format([[sh -c 'pactl set-default-%s "%s"']], device_type, device.name), function()
                 on_checkbox_click()
             end)
         end)
@@ -119,7 +119,7 @@ local function build_rows(devices, on_checkbox_click, device_type)
         end)
 
         row:connect_signal("button::press", function()
-            spawn.easy_async(string.format([[sh -c 'pacmd set-default-%s "%s"']], device_type, device.name), function()
+            spawn.easy_async(string.format([[sh -c 'pactl set-default-%s "%s"']], device_type, device.name), function()
                 on_checkbox_click()
             end)
         end)
@@ -150,9 +150,9 @@ local function rebuild_popup()
         for i = 0, #rows do rows[i]=nil end
 
         table.insert(rows, build_header_row("SINKS"))
-        table.insert(rows, build_rows(sinks, function() rebuild_popup() end, "sink"))
+        table.insert(rows, build_rows(sinks, function() rebuild_popup() end, "sinks"))
         table.insert(rows, build_header_row("SOURCES"))
-        table.insert(rows, build_rows(sources, function() rebuild_popup() end, "source"))
+        table.insert(rows, build_rows(sources, function() rebuild_popup() end, "sources"))
 
         popup:setup(rows)
     end)

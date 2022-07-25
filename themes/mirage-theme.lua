@@ -26,8 +26,8 @@ local theme = {}
 theme.name = "mirage"
 
 -- Font
-theme.font = "SF Pro Text 9"
-theme.title_font = "SF Pro Display Medium 10"
+theme.font = "SF Pro Text 10"
+theme.title_font = "SF Pro Display Medium 11"
 
 -- Background
 theme.bg_normal = "#5B60711A"
@@ -74,8 +74,8 @@ theme.tasklist_fg_urgent = theme.fg_urgent
 theme.tasklist_fg_normal = theme.fg_normal
 
 -- Panel Sizing
-theme.left_panel_width = dpi(60)
-theme.top_panel_height = dpi(30)
+theme.left_panel_width = dpi(50)
+theme.top_panel_height = dpi(35)
 
 -- Notification Sizing
 theme.notification_max_width = dpi(350)

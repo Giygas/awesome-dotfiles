@@ -20,7 +20,10 @@ local dpi = beautiful.xresources.apply_dpi
 -- define module table
 local top_panel = {}
 
+
 local task_list = require("widgets.task-list")
+-- define widgets
+local volume_widget = require("widgets.volume-widget.volume")
 
 
 -- ===================================================================
@@ -53,6 +56,11 @@ top_panel.create = function(s)
       {
          layout = wibox.layout.fixed.horizontal,
          -- wibox.layout.margin(wibox.widget.systray(), dpi(5), dpi(5), dpi(5), dpi(5)),
+         volume_widget {
+            widget_type = 'icon and text',
+            step = 5,
+            device = 'pulse'
+         },
          require("widgets.bluetooth"),
          require("widgets.network")(),
          require("widgets.battery"),
