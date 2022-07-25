@@ -53,24 +53,12 @@ top_panel.create = function(s)
       layout = wibox.layout.align.horizontal,
       nil,
       require("widgets.calendar").create(s),
-      {
-         layout = wibox.layout.fixed.horizontal,
-         -- wibox.layout.margin(wibox.widget.systray(), dpi(5), dpi(5), dpi(5), dpi(5)),
-         brightness_widget{
-            type = 'arc',
-            program = 'light',
-            step = 2,      
-            step = 5,  
-        },
-         volume_widget {
-            widget_type = 'arc',
-            device = 'pulse'
-         },
+      wibox.widget {
          require("widgets.bluetooth"),
          require("widgets.network")(),
          require("widgets.battery"),
-         nil,
-      }
+         layout = wibox.layout.fixed.horizontal,
+      },
    }
 
    local panel_bg = wibox({
