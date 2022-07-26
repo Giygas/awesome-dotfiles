@@ -167,6 +167,8 @@ local function worker(user_args)
                     {
                         id = 'icon',
                         resize = true,
+                        forced_width = 25,
+                        forced_height = 25,
                         widget = wibox.widget.imagebox
                     },
                     valign = 'center',
@@ -176,10 +178,11 @@ local function worker(user_args)
                     id = 'txt',
                     widget = wibox.widget.textbox
                 },
+                spacing = 5,
                 layout = wibox.layout.fixed.horizontal,
             },
             left = 4,
-            right = 4,
+            right = 8,
             layout = wibox.container.margin
         },
         shape = function(cr, width, height)

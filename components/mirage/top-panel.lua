@@ -59,7 +59,7 @@ top_panel.create = function(s)
          require("widgets.battery"),
          weather_widget({
             api_key='593a284f5bb5b35e0cd2213a2b39d9eb',
-            coordinates = {45.5017, -73.5673},
+            coordinates = {-27.4806, -58.8341},
             time_format_12h = false,
             units = 'metric',
             both_units_widget = false,
