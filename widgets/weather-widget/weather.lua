@@ -167,8 +167,8 @@ local function worker(user_args)
                     {
                         id = 'icon',
                         resize = true,
-                        forced_width = 25,
-                        forced_height = 25,
+                        forced_width = 20,
+                        forced_height = 20,
                         widget = wibox.widget.imagebox
                     },
                     valign = 'center',
