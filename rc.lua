@@ -49,8 +49,9 @@ network_interfaces = {
 -- List of apps to run on start-up
 local run_on_start_up = {
    "picom --experimental-backends --config " .. theme_config_dir .. "picom.conf",
+   "/usr/lib/geoclue-2.0/demos/agent",
    "redshift",
-   "xbanish"
+   "xbanish",
 }
 
 

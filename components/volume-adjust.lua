@@ -102,7 +102,6 @@ awesome.connect_signal("volume_change",
             if (mute_status == 0) then
                awful.spawn.easy_async("pactl -- set-sink-mute 0 toggle", false)
             end
-            naughty.notify({ title = "Achtung!", text = stdout, timeout = 1 })
             local volume_level = tonumber(stdout)
             volume_bar.value = volume_level
             if (volume_level > 40) then
