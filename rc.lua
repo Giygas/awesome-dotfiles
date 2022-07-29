@@ -34,7 +34,7 @@ apps = {
    power_manager = "xfce4-power-manager", -- recommended: xfce4-power-manager
    terminal = "konsole",
    launcher = "rofi -normal-window -modi drun -show drun -theme " .. theme_config_dir .. "rofi.rasi",
-   lock = "i3lock",
+   lock = "convert '/home/giygas/Pictures/Wallpaper/Dark Souls/sif.png' -blur 0x8  RGB:- | i3lock --nofork --ignore-empty-password --raw 1920x1080:rgb --image /dev/stdin",
    screenshot = "scrot -e 'mv $f ~/Pictures/Screenshots 2>/dev/null'",
    filebrowser = "nautilus"
 }
@@ -50,7 +50,7 @@ network_interfaces = {
 local run_on_start_up = {
    "picom --experimental-backends --config " .. theme_config_dir .. "picom.conf",
    "/usr/lib/geoclue-2.0/demos/agent",
-   "redshift",
+   "redshift-gtk",
    "xbanish",
 }
 

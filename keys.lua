@@ -159,25 +159,25 @@ keys.globalkeys = gears.table.join(
 
    -- lauch file explorer
    awful.key({ modkey }, "e",
-      function()
-         awful.util.spawn("nautilus") 
-      end,
-      {description = "Open Nautilus", group = "Applications"}
-   ),
+   function()
+      awful.util.spawn("nautilus") 
+   end,
+   {description = "Open Nautilus", group = "Applications"}
+),
 
-   -- =========================================
-   -- FUNCTION KEYS
-   -- =========================================
+-- =========================================
+-- FUNCTION KEYS
+-- =========================================
 
-   -- Brightness
-   awful.key({}, "XF86MonBrightnessUp",
+-- Brightness
+awful.key({}, "XF86MonBrightnessUp",
       function()
          brightness_widget:inc()
       end,
       {description = "+10%", group = "hotkeys"}
    ),
    awful.key({}, "XF86MonBrightnessDown",
-      function()
+   function()
          brightness_widget:dec()
       end,
       {description = "-10%", group = "hotkeys"}
@@ -192,9 +192,9 @@ keys.globalkeys = gears.table.join(
       {description = "volume up", group = "hotkeys"}
    ),
    awful.key({}, "XF86AudioLowerVolume",
-      function()
-         volume_widget:dec(2500)
-         awesome.emit_signal("volume_change")
+   function()
+      volume_widget:dec(2500)
+      awesome.emit_signal("volume_change")
       end,
       {description = "volume down", group = "hotkeys"}
    ),
@@ -205,35 +205,44 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "toggle mute", group = "hotkeys"}
    ),
-   awful.key({}, "XF86AudioNext",
+   
+   -- media keys 
+   awful.key({ modkey }, "]",
       function()
-         awful.spawn("mpc next", false)
+         awful.spawn("playerctl next", false)
       end,
       {description = "next music", group = "hotkeys"}
    ),
-   awful.key({}, "XF86AudioPrev",
-      function()
-         awful.spawn("mpc prev", false)
+   awful.key({ modkey }, "[",
+   function()
+      awful.spawn("playerctl previous", false)
       end,
       {description = "previous music", group = "hotkeys"}
    ),
-   awful.key({}, "XF86AudioPlay",
-      function()
-         awful.spawn("mpc toggle", false)
+   awful.key({ modkey }, "\\",
+   function()
+         awful.spawn("playerctl play-pause", false)
       end,
       {description = "play/pause music", group = "hotkeys"}
    ),
-
+   -- only stop or start spotify
+   awful.key({ modkey }, "s",
+   function()
+         awful.spawn("playerctl play-pause --player=spotify", false)
+      end,
+      {description = "play/pause music", group = "hotkeys"}
+   ),
+   
    -- Screenshot on prtscn using scrot
    awful.key({}, "Print",
-      function()
+   function()
          awful.util.spawn(apps.screenshot, false)
       end
    ),
    
    --F11 and F12 keys
    awful.key({}, "XF86Launch1",
-      function()
+   function()
          awful.util.spawn(apps.screenshot, false)
       end
    ),
@@ -243,7 +252,15 @@ keys.globalkeys = gears.table.join(
          awful.util.spawn(apps.screenshot, false)
       end
    ),
-
+   
+   -- logout
+   awful.key({ modkey }, "x",
+      function()
+         awful.spawn.with_shell("sleep 1 && " .. apps.lock, false)
+      end
+   ),
+   
+   
    
    -- =========================================
    -- RELOAD / QUIT AWESOME
