@@ -206,7 +206,7 @@ awful.key({}, "XF86MonBrightnessUp",
       {description = "toggle mute", group = "hotkeys"}
    ),
    
-   -- media keys 
+   -- Media keys 
    awful.key({ modkey }, "]",
       function()
          awful.spawn("playerctl next", false)
@@ -221,39 +221,65 @@ awful.key({}, "XF86MonBrightnessUp",
    ),
    awful.key({ modkey }, "\\",
    function()
-         awful.spawn("playerctl play-pause", false)
-      end,
-      {description = "play/pause music", group = "hotkeys"}
+      awful.spawn("playerctl --player=spotify,firefox play-pause", false)
+   end,
+   {description = "play/pause music", group = "hotkeys"}
    ),
    -- only stop or start spotify
    awful.key({ modkey }, "s",
    function()
-         awful.spawn("playerctl play-pause --player=spotify", false)
-      end,
+      awful.spawn("playerctl --player=firefox,spotify play-pause", false)
+   end,
+   {description = "play/pause music", group = "hotkeys"}
+   ),
+
+   -- hotkeys to make WF-1000XM3 media keys work
+   awful.key({}, "XF86AudioPlay",
+   function()
+      awful.spawn("playerctl --player=spotify,firefox play", false)
+   end,
+   {description = "play/pause music", group = "hotkeys"}
+   ),
+   awful.key({}, "XF86AudioPause",
+   function()
+      awful.spawn("playerctl --player=spotify,firefox pause", false)
+   end,
+   {description = "play/pause music", group = "hotkeys"}
+   ),
+   awful.key({}, "XF86AudioNext",
+   function()
+      awful.spawn("playerctl next", false)
+   end,
       {description = "play/pause music", group = "hotkeys"}
    ),
-   
+   awful.key({}, "XF86AudioPrev",
+   function()
+      awful.spawn("playerctl previous", false)
+      end,
+   {description = "play/pause music", group = "hotkeys"}
+   ), 
+
    -- Screenshot on prtscn using scrot
    awful.key({}, "Print",
-   function()
-         awful.util.spawn(apps.screenshot, false)
-      end
-   ),
-   
-   --F11 and F12 keys
-   awful.key({}, "XF86Launch1",
-   function()
-         awful.util.spawn(apps.screenshot, false)
-      end
-   ),
-   
-   awful.key({}, "XF86Launch2",
       function()
          awful.util.spawn(apps.screenshot, false)
       end
    ),
+
+   --F11 and F12 keys
+   awful.key({}, "XF86Launch1",
+   function()
+      awful.util.spawn(apps.screenshot, false)
+   end
+   ),
+
+   awful.key({}, "XF86Launch2",
+   function()
+         awful.util.spawn(apps.screenshot, false)
+      end
+   ),
    
-   -- logout
+   -- lock screen
    awful.key({ modkey }, "x",
       function()
          awful.spawn.with_shell("sleep 1 && " .. apps.lock, false)
