@@ -226,7 +226,7 @@ awful.key({}, "XF86MonBrightnessUp",
    {description = "play/pause music", group = "hotkeys"}
    ),
    -- only stop or start spotify
-   awful.key({ modkey }, "s",
+   awful.key({ modkey }, "u",
    function()
       awful.spawn("playerctl --player=firefox,spotify play-pause", false)
    end,

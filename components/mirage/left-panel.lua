@@ -56,41 +56,6 @@ left_panel.create = function(s)
       left = beautiful.left_panel_width
    })
 
-   -- panel:setup {
-   --    expand = "none",
-   --    layout = wibox.layout.align.vertical,
-   --    wibox.layout.margin(require("widgets.layout-box"), dpi(5), dpi(5), dpi(5), dpi(5)),
-   --    {
-   --       layout = wibox.layout.fixed.vertical,
-   --       expand = "none",
-   --       wibox.layout.margin(tag_list.create(s), dpi(0), dpi(0), 0, 0)
-                  
-   --    },
-   --    wibox.widget {
-   --       layout = wibox.layout.align.vertical,
-   --       direction = 'west',
-   --       widget = wibox.container.rotate,
-   --       spacing = 20,
-   --       spacing_widget = 20,
-   --       brightness_widget{
-   --          type = 'arc',
-   --          program = 'light',
-   --          step = 2,      
-   --          step = 5,  
-   --       },
-   --       volume_widget {
-   --          widget_type = 'arc',
-   --          device = 'pulse'
-   --       },
-   --       cpu_widget ({
-   --          width = 70,
-   --          step_width = 3,
-   --          step_spacing = 0,
-   --          color = '#FFFFAAFF'
-   --       }),
-   --    }
-   -- }
-   
    panel:setup {
       layout = wibox.layout.align.vertical,
       expand = "none",
