@@ -12,6 +12,7 @@
 
 local awful = require("awful")
 local beautiful = require("beautiful")
+local ruled = require("ruled")
 
 -- define screen height and width
 local screen_height = awful.screen.focused().geometry.height
@@ -25,6 +26,62 @@ local rules = {}
 -- Rules
 -- ===================================================================
 
+-- Tag for clients
+
+ruled.client.append_rule {
+   rule_any    = {
+       class = {"firefox"}
+   },
+   properties = {
+       tag = screen[1].tags[1],
+   },
+}
+
+ruled.client.append_rule {
+   rule_any    = {
+       class = {"vscodium"}
+   },
+   properties = {
+       tag = screen[1].tags[2],
+   },
+}
+
+ruled.client.append_rule {
+   rule_any    = {
+       class = {"discord"}
+   },
+   properties = {
+       tag = screen[1].tags[3],
+   },
+}
+
+ruled.client.append_rule {
+   rule_any    = {
+       class = {"spotify"}
+   },
+   properties = {
+       tag = screen[1].tags[5],
+   },
+}
+
+ruled.client.append_rule {
+   rule_any    = {
+       class = {"steam"}
+   },
+   properties = {
+       tag = screen[1].tags[7],
+   },
+}
+
+-- Select tag by name:
+ruled.client.append_rule {
+   rule_any    = {
+       class = {"thunderbird"}
+   },
+   properties = {
+       tag = screen[1].tags[8],
+   },
+}
 
 -- return a table of client rules including provided keys / buttons
 function rules.create(clientkeys, clientbuttons)
@@ -71,13 +128,10 @@ function rules.create(clientkeys, clientbuttons)
             },
             class = {
                "Nm-connection-editor",
-               "terminal"
             },
             name = {
                "Event Tester",
                "Steam Guard - Computer Authorization Required",
-               "Konsole",
-               "terminal"
             },
             role = {
                "pop-up",

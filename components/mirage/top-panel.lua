@@ -51,7 +51,7 @@ top_panel.create = function(s)
    panel:setup {
       expand = "none",
       layout = wibox.layout.align.horizontal,
-      nil,
+      wibox.container.margin(task_list.create(s), dpi(55)),
       require("widgets.calendar").create(s),
       wibox.widget {
          require("widgets.bluetooth"),
