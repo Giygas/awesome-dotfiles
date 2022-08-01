@@ -13,6 +13,9 @@
 local awful = require("awful")
 local gears = require("gears")
 
+-- Machi layout
+local machi = require("layout-machi")
+
 local mirage = {}
 
 
@@ -37,12 +40,12 @@ mirage.initialize = function()
    local icon_dir = gears.filesystem.get_configuration_dir() .. "/icons/tags/mirage/"
    -- Set up each screen (add tags & panels)
    awful.screen.connect_for_each_screen(function(s)
-      for i = 1, 7, 1
+      for i = 1, 8, 1
       do
          awful.tag.add(i, {
             icon = icon_dir .. i .. ".png",
             icon_only = true,
-            layout = awful.layout.suit.tile,
+            layout = machi.default_layout,
             screen = s,
             selected = i == 1
          })

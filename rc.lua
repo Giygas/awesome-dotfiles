@@ -14,6 +14,10 @@ brightness_widget = require("widgets.brightness-widget.brightness")
 volume_widget = require("widgets.volume-widget.volume")
 weather_widget = require("widgets.weather-widget.weather")
 
+require("awful.hotkeys_popup.keys")
+-- Machi Layout
+local machi = require("layout-machi")
+
 local lock_script = "~/.scripts/lock.sh"
 
 -- ===================================================================
@@ -81,6 +85,7 @@ end
 -- Import theme
 local beautiful = require("beautiful")
 beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/" .. theme .. "-theme.lua")
+beautiful.layout_machi = machi.get_icon()
 
 -- Initialize theme
 local selected_theme = require(theme)
@@ -97,6 +102,7 @@ awful.rules.rules = create_rules(keys.clientkeys, keys.clientbuttons)
 
 -- Define layouts
 awful.layout.layouts = {
+   machi.default_layout,
    awful.layout.suit.tile,
    awful.layout.suit.floating,
    awful.layout.suit.max,

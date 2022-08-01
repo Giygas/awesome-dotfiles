@@ -14,6 +14,7 @@ local xresources = require("beautiful.xresources")
 local gears = require("gears")
 local dpi = xresources.apply_dpi
 
+
 -- define module table
 local theme = {}
 

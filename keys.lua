@@ -17,6 +17,9 @@ local naughty = require("naughty")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 
+require("awful.hotkeys_popup.keys")
+local machi = require("layout-machi")
+
 -- Define mod keys
 local modkey = "Mod4"
 local altkey = "Mod1"
@@ -404,6 +407,25 @@ awful.key({}, "XF86MonBrightnessUp",
       end
    ),
 
+   
+   -- =========================================
+   -- MACHI LAYOUT
+   -- =========================================
+  
+   awful.key({ modkey, }, ".",
+       function()
+         machi.default_editor.start_interactive()
+      end,
+      {description = "edit the current layout if it is a machi layout", group = "layout"}
+   ),
+   
+   awful.key({ modkey, }, "/",
+      function ()
+         machi.switcher.start(client.focus)
+      end,
+      {description = "switch between windows for a machi layout", group = "layout"}
+   ),
+   
    -- =========================================
    -- CLIENT RESIZING
    -- =========================================

@@ -59,7 +59,7 @@ function rules.create(clientkeys, clientbuttons)
             keys = clientkeys,
             buttons = clientbuttons,
             screen = awful.screen.preferred,
-            placement = awful.placement.centered
+            -- placement = awful.placement.centered
          },
       },
       -- Floating clients.
@@ -70,11 +70,14 @@ function rules.create(clientkeys, clientbuttons)
                "copyq",
             },
             class = {
-               "Nm-connection-editor"
+               "Nm-connection-editor",
+               "terminal"
             },
             name = {
                "Event Tester",
-               "Steam Guard - Computer Authorization Required"
+               "Steam Guard - Computer Authorization Required",
+               "Konsole",
+               "terminal"
             },
             role = {
                "pop-up",
