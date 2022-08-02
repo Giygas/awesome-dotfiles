@@ -64,7 +64,7 @@ theme.taglist_bg_focus = theme.bg_dark
 theme.taglist_spacing = dpi(10)
 
 -- Tasklist
-theme.tasklist_font = theme.font
+theme.tasklist_font = "Montserrat 11"
 
 theme.tasklist_bg_normal = theme.bg_normal
 theme.tasklist_bg_focus = theme.bg_focus

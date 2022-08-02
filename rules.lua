@@ -28,18 +28,18 @@ local rules = {}
 
 -- Tag for clients
 
-ruled.client.append_rule {
-   rule_any    = {
-       class = {"firefox"}
-   },
-   properties = {
-       tag = screen[1].tags[1],
-   },
-}
+-- ruled.client.append_rule {
+--    rule_any    = {
+--        class = {"firefox"}
+--    },
+--    properties = {
+--        tag = screen[1].tags[1],
+--    },
+-- }
 
 ruled.client.append_rule {
    rule_any    = {
-       class = {"vscodium"}
+       class = {"VSCodium"}
    },
    properties = {
        tag = screen[1].tags[2],
@@ -57,7 +57,7 @@ ruled.client.append_rule {
 
 ruled.client.append_rule {
    rule_any    = {
-       class = {"spotify"}
+       class = {"Spotify"}
    },
    properties = {
        tag = screen[1].tags[5],
@@ -66,7 +66,16 @@ ruled.client.append_rule {
 
 ruled.client.append_rule {
    rule_any    = {
-       class = {"steam"}
+       class = {"tradingview", "TradingView"}
+   },
+   properties = {
+       tag = screen[1].tags[6],
+   },
+}
+
+ruled.client.append_rule {
+   rule_any    = {
+       class = {"Steam"}
    },
    properties = {
        tag = screen[1].tags[7],

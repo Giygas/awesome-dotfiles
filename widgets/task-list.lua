@@ -71,14 +71,14 @@ local function list_update(w, buttons, label, data, objects)
       else
          ib = wibox.widget.imagebox()
          tb = wibox.widget.textbox()
-         cb = clickable_container(wibox.container.margin(wibox.widget.imagebox(ICON_DIR .. "close.svg"), dpi(6), dpi(6), dpi(6), dpi(6)))
-         cb.shape = gears.shape.circle
+         -- cb = clickable_container(wibox.container.margin(wibox.widget.imagebox(ICON_DIR .. "close.svg"), dpi(6), dpi(6), dpi(6), dpi(6)))
+         -- cb.shape = gears.shape.circle
          cbm = wibox.container.margin(cb, dpi(4), dpi(8), dpi(2), dpi(2)) -- 4, 8 ,12 ,12 -- close button
-         cbm:buttons(gears.table.join(awful.button({}, 1, nil,
-            function()
-               o.kill(o)
-            end
-         )))
+         -- cbm:buttons(gears.table.join(awful.button({}, 1, nil,
+         --    function()
+         --       o.kill(o)
+         --    end
+         -- )))
          bg_clickable = clickable_container()
          bgb = wibox.container.background()
          tbm = wibox.container.margin(tb, dpi(4), dpi(4))
@@ -91,7 +91,7 @@ local function list_update(w, buttons, label, data, objects)
          l:add(ibm)
          l:add(tbm)
          ll:add(l)
-         ll:add(cbm)
+         -- ll:add(cbm)
 
          bg_clickable:set_widget(ll)
          -- And all of this gets a background
@@ -126,8 +126,8 @@ local function list_update(w, buttons, label, data, objects)
       else
           -- truncate when title is too long
          local text_only = text:match('>(.-)<')
-         if (text_only:len() > 24) then
-            text = text:gsub('>(.-)<', '>' .. text_only:sub(1, 21) .. '...<')
+         if (text_only:len() > 8) then
+            text = text:gsub('>(.-)<', '>' .. text_only:sub(1, 8) .. '...<')
             tt:set_text(text_only)
             tt:add_to_object(tb)
          else
@@ -149,10 +149,11 @@ local function list_update(w, buttons, label, data, objects)
             ibm:set_margins(0)
          end
 
-      bgb.shape = args.shape
-      bgb.shape_border_width = args.shape_border_width
-      bgb.shape_border_color = args.shape_border_color
-
+      bgb.shape = gears.shape.rounded_bar
+      -- -- bgb.shape_border_width = 1
+      -- bgb.shape_border_color = '#00000022'
+      -- bgb:set_bg("#FFFFFF10")
+      
       w:add(bgb)
    end
 end
@@ -205,7 +206,18 @@ task_list.create = function(s)
       s,
       awful.widget.tasklist.filter.currenttags,
       tasklist_buttons,
-      {},
+      {
+         spacing = 5,
+         spacing_widget = {
+            forced_width = 5,
+            shape = gears.shape.circle,
+            widget = wibox.widget.separator,
+         },
+         
+         valign = "center",
+         halign = "center",
+         widget = wibox.container.place,
+      },
       list_update,
       wibox.layout.fixed.horizontal()
    )

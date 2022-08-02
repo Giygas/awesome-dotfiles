@@ -60,6 +60,10 @@ local run_on_start_up = {
    "xbanish",
    "redshift -c ~/.config/redshift.conf",
    "xss-lock --transfer-sleep-lock -- " .. lock_script,
+   -- "steam",
+   -- "firefox",
+   -- "vscodium",
+   -- "discord",
 }
 
 
@@ -102,8 +106,8 @@ awful.rules.rules = create_rules(keys.clientkeys, keys.clientbuttons)
 
 -- Define layouts
 awful.layout.layouts = {
-   machi.default_layout,
    awful.layout.suit.tile,
+   machi.default_layout,
    machi.layout.create{ new_placement_cb = machi.layout.placement.empty_then_fair },
    awful.layout.suit.floating,
    awful.layout.suit.max,
@@ -120,17 +124,17 @@ tag.connect_signal('property::layout', function(t)
 end)
 
 -- Signal function to execute when a new client appears.
--- client.connect_signal("manage", function (c)
---    -- Set the window as a slave (put it at the end of others instead of setting it as master)
---    if not awesome.startup then
---       awful.client.setslave(c)
---    end
+client.connect_signal("manage", function (c)
+   -- Set the window as a slave (put it at the end of others instead of setting it as master)
+   if not awesome.startup then
+      awful.client.setslave(c)
+   end
 
---    if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
---       -- Prevent clients from being unreachable after screen count changes.
---       awful.placement.no_offscreen(c)
---    end
--- end)
+   if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
+      -- Prevent clients from being unreachable after screen count changes.
+      awful.placement.no_offscreen(c)
+   end
+end)
 
 
 -- ===================================================================
