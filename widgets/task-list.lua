@@ -165,11 +165,11 @@ local function list_update(w, buttons, label, data, objects)
    for i, o in ipairs(objects) do
       dot = wibox.container.background()
       dot.bg = '#000000'
-      dot.shape = gears.shape.rounded_bar
+      dot.shape = gears.shape.circle
       dot.shape_border_width = 2
       dot.shape_border_color = "#AAAAAA"
       dot.forced_height = 0
-      dot.forced_width = 40
+      dot.forced_width = 20
       cdot = wibox.container.margin(dot, dpi(10), dpi(20), dpi(30), dpi(20))
       w:add(dot)
    end
