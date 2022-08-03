@@ -75,7 +75,7 @@ local last_bluetooth_check = os.time()
 watch("bluetoothctl show", 5,
    function(_, stdout)
       -- Check if there  bluetooth
-      checker = stdout:match("Powered: yes") -- If 'Controller' string is detected on stdout
+      checker = stdout:match("Powered: yes") -- If Controller powered: yes string is detected on stdout
       local widget_icon_nme
       if (checker ~= nil) then
          widget_icon_name = "bluetooth"
