@@ -158,6 +158,7 @@ end
 --    end
 -- end
 
+-- Need to hardcode the width and height, otherwise this doesn't work
 local shape = function(cr, width, height)
    gears.shape.transform(gears.shape.rounded_bar) : translate(0,15)(cr,35,10)
 end
@@ -167,10 +168,12 @@ local function list_update(w, buttons, label, data, objects)
    w:reset()
    local dot
    for i, o in ipairs(objects) do
+      -- Create a cache for tasks
       local cache = data[o]
       if cache then
          cdot = cache.cdot
       else
+         -- Every dot is just a painted container
          dot = wibox.container.background()
          dot.bg = '#000000'
          dot.shape = shape
@@ -178,6 +181,13 @@ local function list_update(w, buttons, label, data, objects)
          dot.shape_border_color = "#AAAAAA"
          dot.forced_height = 2
          dot.forced_width = 40
+         -- #TODO  make a clickable container
+         --       make different active and not active task
+         bg_clickable = clickable_container()
+         dot:set_widget(bg_clickable)
+         
+         
+         --Put them into a margin container
          cdot = wibox.container.margin(dot, dpi(0), dpi(0), dpi(-8), dpi(0))
       end
       w:add(cdot)
