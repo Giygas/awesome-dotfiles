@@ -158,6 +158,10 @@ end
 --    end
 -- end
 
+local shape = function(cr, width, height)
+   gears.shape.transform(gears.shape.rounded_bar) : translate(0,15)(cr,35,10)
+end
+
 local function list_update(w, buttons, label, data, objects)
    -- update the widgets, creating them if needed
    w:reset()
@@ -169,12 +173,12 @@ local function list_update(w, buttons, label, data, objects)
       else
          dot = wibox.container.background()
          dot.bg = '#000000'
-         dot.shape = gears.shape.circle
+         dot.shape = shape
          dot.shape_border_width = 2
          dot.shape_border_color = "#AAAAAA"
-         dot.forced_height = 10
-         dot.forced_width = 20
-         cdot = wibox.container.margin(dot, dpi(0), dpi(0), dpi(0), dpi(0))
+         dot.forced_height = 2
+         dot.forced_width = 40
+         cdot = wibox.container.margin(dot, dpi(0), dpi(0), dpi(-8), dpi(0))
       end
       w:add(cdot)
    end
@@ -229,16 +233,6 @@ task_list.create = function(s)
       tasklist_buttons,
       {
          spacing = 5,
-         spacing_widget = {
-            forced_width = 5,
-            shape = gears.shape.circle,
-            bg = '#000000',
-            widget = wibox.widget.separator,
-         },
-         
-         valign = "center",
-         halign = "center",
-         widget = wibox.container.place,
       },
       list_update,
       wibox.layout.fixed.horizontal()
