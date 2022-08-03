@@ -125,7 +125,7 @@ function rules.create(clientkeys, clientbuttons)
             keys = clientkeys,
             buttons = clientbuttons,
             screen = awful.screen.preferred,
-            -- placement = awful.placement.centered
+            placement = awful.placement.centered
          },
       },
       -- Floating clients.
@@ -137,6 +137,8 @@ function rules.create(clientkeys, clientbuttons)
             },
             class = {
                "Nm-connection-editor",
+               "blueman-manager",
+               "Blueman-manager",
             },
             name = {
                "Event Tester",
@@ -166,7 +168,7 @@ function rules.create(clientkeys, clientbuttons)
       {
          rule_any = {
             class = {
-               "Firefox"
+               "firefox"
             },
          }, properties = {switchtotag = true}
       },
@@ -205,6 +207,7 @@ function rules.create(clientkeys, clientbuttons)
          rule_any = {class = {"Pavucontrol"}, name = {"Bluetooth Devices"}},
          properties = {floating = true, width = screen_width * 0.55, height = screen_height * 0.45}
       },
+      
    }
 end
 
