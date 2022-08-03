@@ -11,7 +11,7 @@ function widget.get_widget(widgets_args)
     local thickness = args.thickness or 2
     local main_color = args.main_color or beautiful.fg_color
     local bg_color = args.bg_color or '#ffffff11'
-    local mute_color = args.mute_color or beautiful.fg_urgent
+    local mute_color = args.mute_color or '#FF1111'
     local size = args.size or 18
 
     return wibox.widget {

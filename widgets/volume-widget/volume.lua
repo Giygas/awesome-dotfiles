@@ -15,9 +15,11 @@ local beautiful = require("beautiful")
 local watch = require("awful.widget.watch")
 local utils = require("widgets/volume-widget.utils")
 
+local n = require("naughty") -- TEST/ING
 
 
---local LIST_DEVICES_CMD = [[sh -c "pactl list short sinks; pactl list short sources"]]
+
+local LIST_DEVICES_CMD = [[sh -c "pactl list short sinks; pactl list short sources"]]
 local LIST_SINKS_CMD = "pactl list short sinks"
 local LIST_SOURCES_CMD = "pactl list short sources"
 local GET_DEFAULT_SINK_CMD = "pactl get-default-sink"
@@ -246,8 +248,8 @@ local function worker(user_args)
                             popup:move_next_to(mouse.current_widget_geometry)
                         end
                     end),
-                    awful.button({}, 4, function() volume:inc() end),
-                    awful.button({}, 5, function() volume:dec() end),
+                    awful.button({}, 4, function() volume:inc(2500) end),
+                    awful.button({}, 5, function() volume:dec(2500) end),
                     awful.button({}, 2, function() volume:mixer() end),
                     awful.button({}, 1, function() volume:toggle() end)
             )
@@ -256,9 +258,10 @@ local function worker(user_args)
     local mute
     local volume_level
     watch(GET_MUTE_CMD, refresh_rate, function (widget, stdout)
-        mute = string.match(stdout, "Mute: (%D%D%D?)")   -- Mute: yes/no
+        mute = string.match(stdout, "Mute: (%D%D%D?)")   -- Mute: yes/no        
         if mute == 'yes' then widget:mute()
-        elseif mute == 'no' then widget:unmute()
+        -- elseif mute == 'no' then widget:unmute() -- WHY it doesn't evaluate to true here if mute is no?
+        else widget:unmute()
         end
         if volume_level ~= nil then
             widget:set_volume_level(volume_level)
