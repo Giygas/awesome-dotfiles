@@ -163,15 +163,20 @@ local function list_update(w, buttons, label, data, objects)
    w:reset()
    local dot
    for i, o in ipairs(objects) do
-      dot = wibox.container.background()
-      dot.bg = '#000000'
-      dot.shape = gears.shape.circle
-      dot.shape_border_width = 2
-      dot.shape_border_color = "#AAAAAA"
-      dot.forced_height = 0
-      dot.forced_width = 20
-      cdot = wibox.container.margin(dot, dpi(10), dpi(20), dpi(30), dpi(20))
-      w:add(dot)
+      local cache = data[o]
+      if cache then
+         cdot = cache.cdot
+      else
+         dot = wibox.container.background()
+         dot.bg = '#000000'
+         dot.shape = gears.shape.circle
+         dot.shape_border_width = 2
+         dot.shape_border_color = "#AAAAAA"
+         dot.forced_height = 10
+         dot.forced_width = 20
+         cdot = wibox.container.margin(dot, dpi(0), dpi(0), dpi(0), dpi(0))
+      end
+      w:add(cdot)
    end
 end
 
