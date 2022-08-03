@@ -121,33 +121,33 @@ end
 --       args = args or {}
 
 --       -- The text might be invalid, so use pcall.
---       if text == nil or text == '' then
---          tbm:set_margins(0)
---       else
---           -- truncate when title is too long
---          local text_only = text:match('>(.-)<')
---          if (text_only:len() > 8) then
---             text = text:gsub('>(.-)<', '>' .. text_only:sub(1, 8) .. '...<')
---             tt:set_text(text_only)
---             tt:add_to_object(tb)
---          else
---             tt:remove_from_object(tb)
---          end
---          if not tb:set_markup_silently(text) then
---             tb:set_markup('<i>&lt;Invalid text&gt;</i>')
---          end
---       end
---       bgb:set_bg(bg)
---       if type(bg_image) == 'function' then
---          -- TODO: Why does this pass nil as an argument?
---          bg_image = bg_image(tb, o, nil, objects, i)
---       end
---       bgb:set_bgimage(bg_image)
---          if icon then
---             ib.image = icon
---          else
---             ibm:set_margins(0)
---          end
+      -- if text == nil or text == '' then
+      --    tbm:set_margins(0)
+      -- else
+      --     -- truncate when title is too long
+      --    local text_only = text:match('>(.-)<')
+      --    if (text_only:len() > 8) then
+      --       text = text:gsub('>(.-)<', '>' .. text_only:sub(1, 8) .. '...<')
+      --       tt:set_text(text_only)
+      --       tt:add_to_object(tb)
+      --    else
+      --       tt:remove_from_object(tb)
+      --    end
+      --    if not tb:set_markup_silently(text) then
+      --       tb:set_markup('<i>&lt;Invalid text&gt;</i>')
+      --    end
+      -- end
+      -- bgb:set_bg(bg)
+      -- if type(bg_image) == 'function' then
+      --    -- TODO: Why does this pass nil as an argument?
+      --    bg_image = bg_image(tb, o, nil, objects, i)
+      -- end
+      -- bgb:set_bgimage(bg_image)
+      --    if icon then
+      --       ib.image = icon
+      --    else
+      --       ibm:set_margins(0)
+      --    end
 
 --       bgb.shape = gears.shape.rounded_bar
 --       -- -- bgb.shape_border_width = 1
@@ -160,14 +160,14 @@ end
 
 -- Need to hardcode the width and height, otherwise this doesn't work
 local shape = function(cr, width, height)
-   gears.shape.transform(gears.shape.rounded_bar) : translate(0,15)(cr,35,10)
+   gears.shape.transform(gears.shape.rounded_bar) : translate(0,15)(cr,25,10)
 end
 
 local function list_update(w, buttons, label, data, objects)
    -- update the widgets, creating them if needed
    w:reset()
-   local dot
    for i, o in ipairs(objects) do
+      local dot, cdot, tb
       -- Create a cache for tasks
       local cache = data[o]
       if cache then
@@ -177,15 +177,38 @@ local function list_update(w, buttons, label, data, objects)
          dot = wibox.container.background()
          dot.bg = '#000000'
          dot.shape = shape
-         dot.shape_border_width = 2
+         dot.shape_border_width = 1
          dot.shape_border_color = "#AAAAAA"
-         dot.forced_height = 2
-         dot.forced_width = 40
-         -- #TODO  make a clickable container
-         --       make different active and not active task
-         bg_clickable = clickable_container()
-         dot:set_widget(bg_clickable)
          
+         -- Need to force height and width, otherwise the widged dissapears
+         dot.forced_height = 2
+         dot.forced_width = 30
+         
+         -- Give actions for clicks in the task
+         dot:buttons(create_buttons(buttons,o))
+         -- #TODO
+         -- make different active and not active task
+         -- give different colors for minimized and normal clients
+         
+         -- Tooltip to display whole title
+         tt = awful.tooltip({
+            objects = {tb},   -- #TODO tb is textbar. need to create a textbox widget
+            mode = 'outside', --       and put it in context
+            align = 'bottom',
+            delay_show = 0,
+         })
+         
+         -- IDK what this does
+         local text = label(o, tb)
+         
+         -- Clear the text in the tooltip
+         local text_only = text:match('>(.-)<')
+         text = text_only
+         tt:set_text(text)
+         tt:add_to_object(dot)
+            
+         -- Meke every task clickable
+         dot:set_widget(bg_clickable)
          
          --Put them into a margin container
          cdot = wibox.container.margin(dot, dpi(0), dpi(0), dpi(-8), dpi(0))
