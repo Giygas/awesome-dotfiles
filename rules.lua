@@ -125,7 +125,6 @@ function rules.create(clientkeys, clientbuttons)
             keys = clientkeys,
             buttons = clientbuttons,
             screen = awful.screen.preferred,
-            placement = awful.placement.centered
          },
       },
       -- Floating clients.
@@ -139,6 +138,7 @@ function rules.create(clientkeys, clientbuttons)
                "Nm-connection-editor",
                "blueman-manager",
                "Blueman-manager",
+               "xfce4-power-manager-settings",
             },
             name = {
                "Event Tester",
@@ -151,7 +151,7 @@ function rules.create(clientkeys, clientbuttons)
             type = {
                "dialog"
             }
-         }, properties = {floating = true}
+         }, properties = {floating = true, placement = awful.placement.centered}
       },
 
       -- Fullscreen clients

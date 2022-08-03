@@ -16,6 +16,7 @@ local gears = require('gears')
 local clickable_container = require('widgets.clickable-container')
 
 local dpi = require('beautiful').xresources.apply_dpi
+local beautiful = require('beautiful')
 local capi = {button = button}
 local ICON_DIR = gears.filesystem.get_configuration_dir() .. "/icons/"
 
@@ -121,33 +122,33 @@ end
 --       args = args or {}
 
 --       -- The text might be invalid, so use pcall.
-      -- if text == nil or text == '' then
-      --    tbm:set_margins(0)
-      -- else
-      --     -- truncate when title is too long
-      --    local text_only = text:match('>(.-)<')
-      --    if (text_only:len() > 8) then
-      --       text = text:gsub('>(.-)<', '>' .. text_only:sub(1, 8) .. '...<')
-      --       tt:set_text(text_only)
-      --       tt:add_to_object(tb)
-      --    else
-      --       tt:remove_from_object(tb)
-      --    end
-      --    if not tb:set_markup_silently(text) then
-      --       tb:set_markup('<i>&lt;Invalid text&gt;</i>')
-      --    end
-      -- end
-      -- bgb:set_bg(bg)
-      -- if type(bg_image) == 'function' then
-      --    -- TODO: Why does this pass nil as an argument?
-      --    bg_image = bg_image(tb, o, nil, objects, i)
-      -- end
-      -- bgb:set_bgimage(bg_image)
-      --    if icon then
-      --       ib.image = icon
-      --    else
-      --       ibm:set_margins(0)
-      --    end
+--       if text == nil or text == '' then
+--          tbm:set_margins(0)
+--       else
+--           -- truncate when title is too long
+--          local text_only = text:match('>(.-)<')
+--          if (text_only:len() > 8) then
+--             text = text:gsub('>(.-)<', '>' .. text_only:sub(1, 8) .. '...<')
+--             tt:set_text(text_only)
+--             tt:add_to_object(tb)
+--          else
+--             tt:remove_from_object(tb)
+--          end
+--          if not tb:set_markup_silently(text) then
+--             tb:set_markup('<i>&lt;Invalid text&gt;</i>')
+--          end
+--       end
+--       bgb:set_bg(bg)
+--       if type(bg_image) == 'function' then
+--          -- TODO: Why does this pass nil as an argument?
+--          bg_image = bg_image(tb, o, nil, objects, i)
+--       end
+--       bgb:set_bgimage(bg_image)
+--          if icon then
+--             ib.image = icon
+--          else
+--             ibm:set_margins(0)
+--          end
 
 --       bgb.shape = gears.shape.rounded_bar
 --       -- -- bgb.shape_border_width = 1
@@ -167,18 +168,22 @@ local function list_update(w, buttons, label, data, objects)
    -- update the widgets, creating them if needed
    w:reset()
    for i, o in ipairs(objects) do
-      local dot, cdot, tb
+      local dot, cdot, tb, tt
       -- Create a cache for tasks
       local cache = data[o]
       if cache then
+         dot = cache.dot
          cdot = cache.cdot
+         tb = cache.tb
+         tt = cache.tt
       else
          -- Every dot is just a painted container
          dot = wibox.container.background()
+         dot.id = 'background_role'
          dot.bg = '#000000'
          dot.shape = shape
-         dot.shape_border_width = 1
-         dot.shape_border_color = "#AAAAAA"
+         -- dot.shape_border_width = 1
+         -- dot.shape_border_color = "#AAAAAA"
          
          -- Need to force height and width, otherwise the widged dissapears
          dot.forced_height = 2
@@ -189,30 +194,40 @@ local function list_update(w, buttons, label, data, objects)
          -- #TODO
          -- make different active and not active task
          -- give different colors for minimized and normal clients
+         -- create the cache
          
          -- Tooltip to display whole title
          tt = awful.tooltip({
-            objects = {tb},   -- #TODO tb is textbar. need to create a textbox widget
-            mode = 'outside', --       and put it in context
+            objects = {tb},
+            mode = 'outside',
             align = 'bottom',
             delay_show = 0,
          })
          
-         -- IDK what this does
-         local text = label(o, tb)
+         -- Data cache
+         data[o] = {
+            dot = dot,
+            cdot = cdot,
+            tb = tb,
+            tt = tt
+         }
+      end   
          
-         -- Clear the text in the tooltip
-         local text_only = text:match('>(.-)<')
-         text = text_only
-         tt:set_text(text)
-         tt:add_to_object(dot)
-            
-         -- Meke every task clickable
-         dot:set_widget(bg_clickable)
+      -- IDK what this does
+      local text = label(o, tb)
+      
+      -- Clear the text in the tooltip
+      local text_only = text:match('>(.-)<')
+      text = text_only
+      tt:set_text(text)
+      tt:add_to_object(dot)
          
-         --Put them into a margin container
-         cdot = wibox.container.margin(dot, dpi(0), dpi(0), dpi(-8), dpi(0))
-      end
+      -- Meke every task clickable
+      dot:set_widget(bg_clickable)
+      
+      --Put them into a margin container
+      cdot = wibox.container.margin(dot, dpi(0), dpi(0), dpi(-8), dpi(0))
+      
       w:add(cdot)
    end
 end
@@ -259,6 +274,7 @@ local tasklist_buttons = awful.util.table.join(
 )
 
 
+-- Create the tasklist 
 task_list.create = function(s)
    return awful.widget.tasklist(
       s,

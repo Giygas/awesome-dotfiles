@@ -69,13 +69,12 @@ local function show_battery_warning()
       icon_size = dpi(48),
       text = "Huston, we have a problem",
       title = "Battery is dying",
-      timeout = 5,
+      timeout = 25,
       hover_timeout = 0.5,
       position = "top_right",
       bg = "#d32f2f",
       fg = "#EEE9EF",
-      width = 248,
-      naughty.config.presets.critical
+      width = 248
    }
 end
 
@@ -113,7 +112,7 @@ watch("acpi -i", 1,
       charge = charge / capacity
 
       if (charge >= 0 and charge < 15) then
-         if status ~= "Charging" and (os.difftime(os.time(), last_battery_check) > 300) then
+         if status ~= "Charging" and os.difftime(os.time(), last_battery_check) > 300 then
             -- if 5 minutes have elapsed since the last warning
             last_battery_check = os.time()
             show_battery_warning()
