@@ -107,8 +107,8 @@ awful.rules.rules = create_rules(keys.clientkeys, keys.clientbuttons)
 -- Define layouts
 awful.layout.layouts = {
    awful.layout.suit.tile,
-   machi.default_layout,
-   machi.layout.create{ new_placement_cb = machi.layout.placement.empty_then_fair },
+   -- machi.default_layout,
+   -- machi.layout.create{ new_placement_cb = machi.layout.placement.empty_then_fair },
    awful.layout.suit.floating,
    awful.layout.suit.max,
 }
