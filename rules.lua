@@ -28,14 +28,15 @@ local rules = {}
 
 -- Tag for clients
 
--- ruled.client.append_rule {
---    rule_any    = {
---        class = {"firefox"}
---    },
---    properties = {
---        tag = screen[1].tags[1],
---    },
--- }
+ruled.client.append_rule {
+   rule_any    = {
+       class = {"konsole"}
+   },
+   properties = {
+       tag = screen[1].tags[1],
+       switchtotag = true,
+   },
+}
 
 ruled.client.append_rule {
    rule_any    = {
