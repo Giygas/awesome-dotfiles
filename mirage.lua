@@ -45,7 +45,9 @@ mirage.initialize = function()
          awful.tag.add(i, {
             icon = icon_dir .. i .. ".png",
             icon_only = true,
-            layout = machi.default_layout,
+            -- layout = machi.default_layout,
+            layout = awful.layout.suit.tile,
+            
             screen = s,
             selected = i == 1
          })

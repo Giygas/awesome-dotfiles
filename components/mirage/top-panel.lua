@@ -22,7 +22,7 @@ local top_panel = {}
 
 
 -- define widgets
-local task_list = require("widgets.task-list")
+-- local task_list = require("widgets.task-list")
 
 
 
@@ -51,7 +51,8 @@ top_panel.create = function(s)
    panel:setup {
       expand = "none",
       layout = wibox.layout.align.horizontal,
-      wibox.container.margin(task_list.create(s), dpi(55)),
+      -- wibox.container.margin(task_list.create(s), dpi(55)),
+      nil,
       require("widgets.calendar").create(s),
       wibox.widget {
          require("widgets.bluetooth"),
