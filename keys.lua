@@ -385,19 +385,34 @@ awful.key({}, "XF86MonBrightnessUp",
    ),
 
    -- Focus client by index (cycle through clients)
-   awful.key({modkey}, "Tab",
+   awful.key({altkey}, "Tab",
       function()
          awful.client.focus.byidx(1)
       end,
       {description = "focus next by index", group = "client"}
    ),
-   awful.key({modkey, "Shift"}, "Tab",
+   
+   awful.key({altkey, "Shift"}, "Tab",
       function()
          awful.client.focus.byidx(-1)
       end,
       {description = "focus previous by index", group = "client"}
    ),
-
+   
+   -- Change between the last 2 active tags
+   awful.key({modkey}, "Tab",
+      function ()
+         local c = awful.client.focus.history.list[2]
+         client.focus = c
+         local t = client.focus and client.focus.first_tag or nil
+         if t then
+            t:view_only()
+         end
+         c:raise()
+      end,
+      {description = "go back", group = "client"}
+   ),
+   
    -- =========================================
    -- SCREEN FOCUSING
    -- =========================================
