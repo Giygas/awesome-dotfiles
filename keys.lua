@@ -154,6 +154,14 @@ keys.globalkeys = gears.table.join(
       {description = "application launcher", group = "launcher"}
    ),
    
+   -- launch network rofi
+   awful.key({modkey}, "\\",
+      function()
+         awful.spawn.with_shell("~/.config/awesome/rofi/bin/network")
+      end,
+      {description = "application launcher", group = "launcher"}
+   ),
+   
    -- launch firefox   
    awful.key({ modkey, }, "w",
       function()
