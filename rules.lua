@@ -97,21 +97,21 @@ ruled.client.append_rule {
 function rules.create(clientkeys, clientbuttons)
    local rofi_rule = {}
 
-   if beautiful.name == "mirage" then
-      rofi_rule = {
-         rule_any = {name = {"rofi"}},
-         properties = {floating = true, titlebars_enabled = false},
-         callback = function(c)
-            if beautiful.name == "mirage" then
-               awful.placement.left(c)
-            end
-         end
-      }
-   else rofi_rule = {
-         rule_any = {name = {"rofi"}},
-         properties = {maximized = true, floating = true, titlebars_enabled = false},
-      }
-   end
+   -- if beautiful.name == "mirage" then
+   --    rofi_rule = {
+   --       rule_any = {name = {"rofi"}},
+   --       properties = {floating = true, titlebars_enabled = false},
+   --       callback = function(c)
+   --          if beautiful.name == "mirage" then
+   --             awful.placement.left(c)
+   --          end
+   --       end
+   --    }
+   -- else rofi_rule = {
+   --       rule_any = {name = {"rofi"}},
+   --       properties = {maximized = true, floating = true, titlebars_enabled = false},
+   --    }
+   -- end
 
    return {
       -- All clients will match this rule.
@@ -140,7 +140,7 @@ function rules.create(clientkeys, clientbuttons)
                "blueman-manager",
                "Blueman-manager",
                "xfce4-power-manager-settings",
-               "alacritty",
+               "Alacritty",
             },
             name = {
                "Event Tester",

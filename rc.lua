@@ -42,6 +42,7 @@ apps = {
    network_manager = "nm-connection-editor", -- recommended: nm-connection-editor
    power_manager = "xfce4-power-manager -c", -- recommended: xfce4-power-manager
    terminal = "konsole",
+   terminal2 = "alacritty",
    launcher = DIR .. "/rofi/bin/launcher",
    lock = lock_script,
    screenshot = "scrot -e 'mv $f ~/Pictures/Screenshots 2>/dev/null'",

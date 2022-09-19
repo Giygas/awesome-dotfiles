@@ -18,7 +18,7 @@
 #																										 
 ##########################################################################################################
 
-DIR="$HOME/.config/bspwm"
+DIR="$HOME/.config/awesome"
 
 rofi_command="rofi -theme $DIR/rofi/themes/powermenu.rasi"
 

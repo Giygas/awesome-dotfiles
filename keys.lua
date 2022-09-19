@@ -149,6 +149,15 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "open a terminal", group = "launcher"}
    ),
+   
+   -- Spawn Alacritty
+   awful.key({modkey, "Shift"}, "Return",
+      function()
+         awful.spawn.with_shell(apps.terminal2)
+      end,
+      {description = "open a terminal", group = "launcher"}
+   ),
+   
    -- launch rofi
    awful.key({modkey}, "Control_L",
       function()
@@ -161,6 +170,14 @@ keys.globalkeys = gears.table.join(
    awful.key({modkey}, "\\",
       function()
          awful.spawn.with_shell(DIR .. "/rofi/bin/network")
+      end,
+      {description = "application launcher", group = "launcher"}
+   ),
+   
+   -- window selector
+   awful.key({modkey}, "BackSpace",
+      function()
+         awful.spawn.with_shell(DIR .. "/rofi/bin/windows")
       end,
       {description = "application launcher", group = "launcher"}
    ),
