@@ -29,6 +29,9 @@ local altkey = "Mod1"
 -- define module table
 local keys = {}
 
+-- configuration directory
+DIR="$HOME/.config/awesome"
+
 -- ===================================================================
 -- Movement Functions (Called by some keybinds)
 -- ===================================================================
@@ -149,7 +152,15 @@ keys.globalkeys = gears.table.join(
    -- launch rofi
    awful.key({modkey}, "d",
       function()
-         awful.spawn(apps.launcher)
+         awful.spawn.with_shell("$HOME/.config/awesome/rofi/bin/launcher")
+      end,
+      {description = "application launcher", group = "launcher"}
+   ),
+   
+   -- launch network rofi
+   awful.key({modkey}, "\\",
+      function()
+         awful.spawn.with_shell("$DIR/rofi/bin/network")
       end,
       {description = "application launcher", group = "launcher"}
    ),
