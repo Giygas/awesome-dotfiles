@@ -20,6 +20,9 @@ local machi = require("layout-machi")
 
 local lock_script = "~/.scripts/lock.sh"
 
+-- awesome config directory
+DIR="$HOME/.config/awesome"
+
 -- ===================================================================
 -- User Configuration
 -- ===================================================================
@@ -39,7 +42,7 @@ apps = {
    network_manager = "nm-connection-editor", -- recommended: nm-connection-editor
    power_manager = "xfce4-power-manager -c", -- recommended: xfce4-power-manager
    terminal = "konsole",
-   launcher = "rofi -normal-window -modi drun -show drun -theme " .. theme_config_dir .. "rofi.rasi",
+   launcher = "$DIR/rofi/bin/launcher",
    lock = lock_script,
    screenshot = "scrot -e 'mv $f ~/Pictures/Screenshots 2>/dev/null'",
    filebrowser = "nautilus"
