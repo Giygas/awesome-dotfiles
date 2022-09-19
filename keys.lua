@@ -150,9 +150,9 @@ keys.globalkeys = gears.table.join(
       {description = "open a terminal", group = "launcher"}
    ),
    -- launch rofi
-   awful.key({modkey}, "d",
+   awful.key({modkey}, "Control_L",
       function()
-         awful.spawn.with_shell("$HOME/.config/awesome/rofi/bin/launcher")
+         awful.spawn.with_shell(apps.launcher)
       end,
       {description = "application launcher", group = "launcher"}
    ),
@@ -160,7 +160,7 @@ keys.globalkeys = gears.table.join(
    -- launch network rofi
    awful.key({modkey}, "\\",
       function()
-         awful.spawn.with_shell("$DIR/rofi/bin/network")
+         awful.spawn.with_shell(DIR .. "/rofi/bin/network")
       end,
       {description = "application launcher", group = "launcher"}
    ),
