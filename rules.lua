@@ -141,6 +141,8 @@ function rules.create(clientkeys, clientbuttons)
                "blueman-manager",
                "Blueman-manager",
                "xfce4-power-manager-settings",
+               "qalculate-gtk",
+               "Qalculate-gtk",
             },
             name = {
                "Event Tester",
