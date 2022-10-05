@@ -53,10 +53,10 @@ case $chosen in
 		fi 
         ;;
     $bmon)
-        alacritty --class 'alacritty-float,alacritty-float' --config-file $DIR/rofi/alacritty-cfg/alacritty.yml -e bmon
+        alacritty --class 'alacritty-float,alacritty-float' --config-file $DIR/rofi/alacritty-cfg/alacritty_centered.yml -e bmon
         ;;
     $launch_cli)
-        alacritty --class 'alacritty-float,alacritty-float' --config-file $DIR/rofi/alacritty-cfg/alacritty.yml -e nmtui
+        alacritty --class 'alacritty-float,alacritty-float' --config-file $DIR/rofi/alacritty-cfg/alacritty_centered.yml -e nmtui
         ;;
     $launch)
         nm-connection-editor

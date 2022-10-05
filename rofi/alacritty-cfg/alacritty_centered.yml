@@ -15,24 +15,23 @@ env:
 ## Terminal window settings
 window:
   dimensions:
-    columns: 110
-    lines: 15
+    columns: 82
+    lines: 30
 
   padding:
     x: 12
     y: 12
-  
+    
   dynamic_padding: true
 
   decorations: full
   startup_mode: Windowed
   dynamic_title: false
   
-  title: "Alacritty_n"
-  class: "Alacritty_n"
-  instance: "Alacritty_n"
-  
-  
+  class: Alacritty_c
+  general: Alacritty_c
+  title: Alacritty_c
+
 ## scrolling
   history: 10000
   multiplier: 3

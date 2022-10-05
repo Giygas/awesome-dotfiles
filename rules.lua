@@ -134,17 +134,18 @@ function rules.create(clientkeys, clientbuttons)
             instance = {
                "DTA",
                "copyq",
+               "Alacritty_c"
             },
             class = {
                "Nm-connection-editor",
                "blueman-manager",
                "Blueman-manager",
                "xfce4-power-manager-settings",
-               "Alacritty",
             },
             name = {
                "Event Tester",
                "Steam Guard - Computer Authorization Required",
+               "Alacritty_c" -- Centered Alacritty floating in center
             },
             role = {
                "pop-up",
@@ -156,6 +157,19 @@ function rules.create(clientkeys, clientbuttons)
          }, properties = {floating = true, placement = awful.placement.centered}
       },
 
+      {
+         rule_any = {
+            -- class = {
+            --    "Alacritty_",
+            --    "alacritty",
+            -- }
+            -- Normal Alacritty floating in bottom right
+            name = {
+               "Alacritty_n"
+            }
+         }, properties = {floating = true, placement = awful.placement.bottom_right}
+      },
+      
       -- Fullscreen clients
       {
          rule_any = {

@@ -67,7 +67,7 @@ local exit_screen_grabber
 
 local function suspend_command()
    exit_screen.hide()
-   awful.spawn.with_shell(apps.lock .. " & systemctl suspend-then-hibernate")
+   awful.spawn.with_shell(apps.lock .. " & systemctl hibernate")
 end
 
 local function exit_command()
