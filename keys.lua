@@ -298,6 +298,13 @@ awful.key({}, "XF86MonBrightnessUp",
          awful.util.spawn(apps.screenshot, false)
       end
    ),
+   
+   -- Screen crop using flameshot
+   awful.key({ modkey }, "Print",
+      function()
+         awful.util.spawn("flameshot gui --pin", false)
+      end
+   ),
 
    --F11 and F12 keys
    awful.key({}, "XF86Launch1",

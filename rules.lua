@@ -154,21 +154,28 @@ function rules.create(clientkeys, clientbuttons)
             type = {
                "dialog"
             }
-         }, properties = {floating = true, placement = awful.placement.centered}
+         }, properties = {floating = true, placement = awful.placement.centered, opacity = 1.0}
       },
 
       {
          rule_any = {
-            -- class = {
-            --    "Alacritty_",
-            --    "alacritty",
-            -- }
             -- Normal Alacritty floating in bottom right
             name = {
                "Alacritty_n"
             }
          }, properties = {floating = true, placement = awful.placement.bottom_right}
       },
+      
+      
+      -- Removing focus from always on top clients
+      {
+         rule_any = {
+            class = {
+               "flameshot"
+            }
+         }, properties = {floating = true, focus = false, ontop = true, opacity = 1.0, sticky = false}
+      },
+
       
       -- Fullscreen clients
       {
