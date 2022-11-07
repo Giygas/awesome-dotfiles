@@ -143,10 +143,13 @@ function rules.create(clientkeys, clientbuttons)
                "xfce4-power-manager-settings",
                "qalculate-gtk",
                "Qalculate-gtk",
+               "EasyEffects",
+               "Thunar",
             },
             name = {
                "Event Tester",
                "Steam Guard - Computer Authorization Required",
+               "EasyEffects",
                "Alacritty_c" -- Centered Alacritty floating in center
             },
             role = {
@@ -156,6 +159,8 @@ function rules.create(clientkeys, clientbuttons)
             type = {
                "dialog"
             }
+         -- This one is the original, testing for placement of the floating windows
+         -- }, properties = {floating = true, placement = awful.placement.centered, opacity = 1.0}
          }, properties = {floating = true, placement = awful.placement.centered, opacity = 1.0}
       },
 
@@ -173,7 +178,9 @@ function rules.create(clientkeys, clientbuttons)
       {
          rule_any = {
             class = {
-               "flameshot"
+               "flameshot",
+               "feh",
+               "Feh",
             }
          }, properties = {floating = true, focus = false, ontop = true, opacity = 1.0, sticky = false}
       },

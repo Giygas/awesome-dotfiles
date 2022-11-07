@@ -157,6 +157,16 @@ tag_list.create = function(s)
             function(t)
                awful.tag.viewnext(t.screen)
             end
+         ),
+         awful.button({}, 8,
+            function(t)
+               awful.tag.viewprev(t.screen)
+            end
+         ),
+         awful.button({}, 9,
+            function(t)
+               awful.tag.viewnext(t.screen)
+            end
          )
       ),
       {},

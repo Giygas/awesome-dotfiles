@@ -115,7 +115,6 @@ keys.desktopbuttons = gears.table.join(
       end
    )
 )
-
 -- Mouse buttons on the client
 keys.clientbuttons = gears.table.join(
    -- Raise client
@@ -193,7 +192,7 @@ keys.globalkeys = gears.table.join(
    -- lauch file explorer
    awful.key({ modkey }, "e",
    function()
-      awful.util.spawn("nautilus") 
+      awful.util.spawn(apps.filebrowser) 
    end,
    {description = "Open Nautilus", group = "Applications"}
 ),
