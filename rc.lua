@@ -20,6 +20,9 @@ local machi = require("layout-machi")
 
 local lock_script = "~/.scripts/lock.sh"
 
+-- awesome config directory
+DIR="$HOME/.config/awesome"
+
 -- ===================================================================
 -- User Configuration
 -- ===================================================================
@@ -39,10 +42,11 @@ apps = {
    network_manager = "nm-connection-editor", -- recommended: nm-connection-editor
    power_manager = "xfce4-power-manager -c", -- recommended: xfce4-power-manager
    terminal = "konsole",
-   launcher = "rofi -normal-window -modi drun -show drun -theme " .. theme_config_dir .. "rofi.rasi",
+   terminal2 = "alacritty  --class alacritty-bottom,alacritty-bottom --config-file " .. DIR .. "/rofi/alacritty-cfg/alacritty.yml",
+   launcher = DIR .. "/rofi/bin/launcher",
    lock = lock_script,
    screenshot = "scrot -e 'mv $f ~/Pictures/Screenshots 2>/dev/null'",
-   filebrowser = "nautilus"
+   filebrowser = "thunar"
 }
  
 
@@ -57,8 +61,10 @@ network_interfaces = {
 local run_on_start_up = {
    "picom --experimental-backends --config " .. theme_config_dir .. "picom.conf",
    "/usr/lib/geoclue-2.0/demos/agent",
-   "xbanish",
+   -- "xbanish",
+   "xinput set-prop \"PNP0C50:00 04F3:30AA Touchpad\" \"libinput Tapping Enabled\" 1",
    "redshift -c ~/.config/redshift.conf",
+   "easyeffects --gapplication-service",
    "xss-lock --transfer-sleep-lock -- " .. lock_script,
    -- "steam",
    -- "firefox",

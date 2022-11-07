@@ -23,6 +23,9 @@ local ICON_DIR = gears.filesystem.get_configuration_dir() .. "/icons/"
 -- define module table
 local task_list = {}
 
+--TESTING
+local naughty = require("naughty")
+
 
 -- ===================================================================
 -- Functionality
@@ -278,12 +281,12 @@ local tasklist_buttons = awful.util.table.join(
 task_list.create = function(s)
    return awful.widget.tasklist(
       s,
-      awful.widget.tasklist.filter.currenttags,
-      tasklist_buttons,
-      {
+      awful.widget.tasklist.filter.alltags,
+      nil, -- buttons
+      { -- layout
          spacing = 5,
       },
-      list_update,
+      list_update, -- widget template
       wibox.layout.fixed.horizontal()
    )
 end

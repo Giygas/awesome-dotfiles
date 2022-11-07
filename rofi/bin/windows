@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+DIR="~/.config/awesome"
+
+rofi -no-lazy-grab -show window -theme $DIR/rofi/themes/window.rasi

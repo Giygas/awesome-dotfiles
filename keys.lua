@@ -29,6 +29,9 @@ local altkey = "Mod1"
 -- define module table
 local keys = {}
 
+-- configuration directory
+DIR="$HOME/.config/awesome"
+
 -- ===================================================================
 -- Movement Functions (Called by some keybinds)
 -- ===================================================================
@@ -112,7 +115,6 @@ keys.desktopbuttons = gears.table.join(
       end
    )
 )
-
 -- Mouse buttons on the client
 keys.clientbuttons = gears.table.join(
    -- Raise client
@@ -146,10 +148,35 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "open a terminal", group = "launcher"}
    ),
-   -- launch rofi
-   awful.key({modkey}, "d",
+   
+   -- Spawn Alacritty
+   awful.key({modkey, "Shift"}, "Return",
       function()
-         awful.spawn(apps.launcher)
+         awful.spawn.with_shell(apps.terminal2)
+      end,
+      {description = "open a terminal", group = "launcher"}
+   ),
+   
+   -- launch rofi
+   awful.key({modkey}, "Control_L",
+      function()
+         awful.spawn.with_shell(apps.launcher)
+      end,
+      {description = "application launcher", group = "launcher"}
+   ),
+   
+   -- launch network rofi
+   awful.key({modkey}, "\\",
+      function()
+         awful.spawn.with_shell(DIR .. "/rofi/bin/network")
+      end,
+      {description = "application launcher", group = "launcher"}
+   ),
+   
+   -- window selector
+   awful.key({modkey}, "BackSpace",
+      function()
+         awful.spawn.with_shell(DIR .. "/rofi/bin/windows")
       end,
       {description = "application launcher", group = "launcher"}
    ),
@@ -165,7 +192,7 @@ keys.globalkeys = gears.table.join(
    -- lauch file explorer
    awful.key({ modkey }, "e",
    function()
-      awful.util.spawn("nautilus") 
+      awful.util.spawn(apps.filebrowser) 
    end,
    {description = "Open Nautilus", group = "Applications"}
 ),
@@ -268,6 +295,13 @@ awful.key({}, "XF86MonBrightnessUp",
    awful.key({}, "Print",
       function()
          awful.util.spawn(apps.screenshot, false)
+      end
+   ),
+   
+   -- Screen crop using flameshot
+   awful.key({ modkey }, "Print",
+      function()
+         awful.util.spawn("flameshot gui --pin", false)
       end
    ),
 
@@ -385,19 +419,34 @@ awful.key({}, "XF86MonBrightnessUp",
    ),
 
    -- Focus client by index (cycle through clients)
-   awful.key({modkey}, "Tab",
+   awful.key({altkey}, "Tab",
       function()
          awful.client.focus.byidx(1)
       end,
       {description = "focus next by index", group = "client"}
    ),
-   awful.key({modkey, "Shift"}, "Tab",
+   
+   awful.key({altkey, "Shift"}, "Tab",
       function()
          awful.client.focus.byidx(-1)
       end,
       {description = "focus previous by index", group = "client"}
    ),
-
+   
+   -- Change between the last 2 active tags
+   awful.key({modkey}, "Tab",
+      function ()
+         local c = awful.client.focus.history.list[2]
+         client.focus = c
+         local t = client.focus and client.focus.first_tag or nil
+         if t then
+            t:view_only()
+         end
+         c:raise()
+      end,
+      {description = "go back", group = "client"}
+   ),
+   
    -- =========================================
    -- SCREEN FOCUSING
    -- =========================================

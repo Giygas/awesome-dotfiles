@@ -27,6 +27,7 @@ local wibox = require("wibox")
 local clickable_container = require("widgets.clickable-container")
 local gears = require("gears")
 local dpi = require("beautiful").xresources.apply_dpi
+local naughty = require("naughty")
 
 local PATH_TO_ICONS = os.getenv("HOME") .. "/.config/awesome/icons/battery/"
 
@@ -65,7 +66,7 @@ local battery_popup = awful.tooltip({
 
 local function show_battery_warning()
    naughty.notify {
-      icon = PATH_TO_ICONS .. "battery-alert.svg",
+      icon = PATH_TO_ICONS .. "battery-outline.svg",
       icon_size = dpi(48),
       text = "Huston, we have a problem",
       title = "Battery is dying",

@@ -28,14 +28,15 @@ local rules = {}
 
 -- Tag for clients
 
--- ruled.client.append_rule {
---    rule_any    = {
---        class = {"firefox"}
---    },
---    properties = {
---        tag = screen[1].tags[1],
---    },
--- }
+ruled.client.append_rule {
+   rule_any    = {
+       class = {"konsole"}
+   },
+   properties = {
+       tag = screen[1].tags[1],
+       switchtotag = true,
+   },
+}
 
 ruled.client.append_rule {
    rule_any    = {
@@ -96,21 +97,21 @@ ruled.client.append_rule {
 function rules.create(clientkeys, clientbuttons)
    local rofi_rule = {}
 
-   if beautiful.name == "mirage" then
-      rofi_rule = {
-         rule_any = {name = {"rofi"}},
-         properties = {floating = true, titlebars_enabled = false},
-         callback = function(c)
-            if beautiful.name == "mirage" then
-               awful.placement.left(c)
-            end
-         end
-      }
-   else rofi_rule = {
-         rule_any = {name = {"rofi"}},
-         properties = {maximized = true, floating = true, titlebars_enabled = false},
-      }
-   end
+   -- if beautiful.name == "mirage" then
+   --    rofi_rule = {
+   --       rule_any = {name = {"rofi"}},
+   --       properties = {floating = true, titlebars_enabled = false},
+   --       callback = function(c)
+   --          if beautiful.name == "mirage" then
+   --             awful.placement.left(c)
+   --          end
+   --       end
+   --    }
+   -- else rofi_rule = {
+   --       rule_any = {name = {"rofi"}},
+   --       properties = {maximized = true, floating = true, titlebars_enabled = false},
+   --    }
+   -- end
 
    return {
       -- All clients will match this rule.
@@ -133,16 +134,23 @@ function rules.create(clientkeys, clientbuttons)
             instance = {
                "DTA",
                "copyq",
+               "Alacritty_c"
             },
             class = {
                "Nm-connection-editor",
                "blueman-manager",
                "Blueman-manager",
                "xfce4-power-manager-settings",
+               "qalculate-gtk",
+               "Qalculate-gtk",
+               "EasyEffects",
+               "Thunar",
             },
             name = {
                "Event Tester",
                "Steam Guard - Computer Authorization Required",
+               "EasyEffects",
+               "Alacritty_c" -- Centered Alacritty floating in center
             },
             role = {
                "pop-up",
@@ -151,9 +159,33 @@ function rules.create(clientkeys, clientbuttons)
             type = {
                "dialog"
             }
-         }, properties = {floating = true, placement = awful.placement.centered}
+         -- This one is the original, testing for placement of the floating windows
+         -- }, properties = {floating = true, placement = awful.placement.centered, opacity = 1.0}
+         }, properties = {floating = true, placement = awful.placement.centered, opacity = 1.0}
       },
 
+      {
+         rule_any = {
+            -- Normal Alacritty floating in bottom right
+            name = {
+               "Alacritty_n"
+            }
+         }, properties = {floating = true, placement = awful.placement.bottom_right}
+      },
+      
+      
+      -- Removing focus from always on top clients
+      {
+         rule_any = {
+            class = {
+               "flameshot",
+               "feh",
+               "Feh",
+            }
+         }, properties = {floating = true, focus = false, ontop = true, opacity = 1.0, sticky = false}
+      },
+
+      
       -- Fullscreen clients
       {
          rule_any = {
