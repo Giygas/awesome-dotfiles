@@ -40,7 +40,7 @@ ruled.client.append_rule {
 
 ruled.client.append_rule {
    rule_any    = {
-       class = {"VSCodium"}
+       class = {"VSCodium","code-oss", "Code-oss"}
    },
    properties = {
        tag = screen[1].tags[2],
@@ -179,8 +179,6 @@ function rules.create(clientkeys, clientbuttons)
          rule_any = {
             class = {
                "flameshot",
-               "feh",
-               "Feh",
             }
          }, properties = {floating = true, focus = false, ontop = true, opacity = 1.0, sticky = false}
       },

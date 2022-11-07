@@ -258,7 +258,7 @@ awful.key({}, "XF86MonBrightnessUp",
    {description = "play/pause music", group = "hotkeys"}
    ),
    -- only stop or start spotify
-   awful.key({ modkey }, "u",
+   awful.key({ modkey }, "p",
    function()
       awful.spawn("playerctl --player=firefox,spotify play-pause", false)
    end,
@@ -352,6 +352,10 @@ awful.key({}, "XF86MonBrightnessUp",
          awesome.emit_signal("show_exit_screen")
       end,
       {description = "toggle exit screen", group = "hotkeys"}
+   ),
+   
+   awful.key({ modkey }, "u", awful.client.urgent.jumpto,
+   {description = "play/pause music", group = "hotkeys"}
    ),
 
    -- =========================================

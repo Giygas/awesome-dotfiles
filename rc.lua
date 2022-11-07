@@ -61,7 +61,7 @@ network_interfaces = {
 local run_on_start_up = {
    "picom --experimental-backends --config " .. theme_config_dir .. "picom.conf",
    "/usr/lib/geoclue-2.0/demos/agent",
-   -- "xbanish",
+   "xbanish",
    "xinput set-prop \"PNP0C50:00 04F3:30AA Touchpad\" \"libinput Tapping Enabled\" 1",
    "redshift -c ~/.config/redshift.conf",
    "easyeffects --gapplication-service",
