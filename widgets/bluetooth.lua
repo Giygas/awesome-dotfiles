@@ -19,7 +19,7 @@ local dpi = require("beautiful").xresources.apply_dpi
 
 local PATH_TO_ICONS = os.getenv("HOME") .. "/.config/awesome/icons/bluetooth/"
 local checker
-
+local naughty = require("naughty")
 
 -- ===================================================================
 -- Initialization
@@ -46,9 +46,9 @@ widget_button:buttons(
       awful.button({}, 3, nil,
          function()
             if checker ~= nil then
-               awful.spawn.easy_async("bluetoothctl power off")
+               awful.spawn.easy_async_with_shell('bluetoothctl power off')
             else
-               awful.spawn.easy_async("bluetoothctl power on")
+               awful.spawn.easy_async_with_shell('bluetoothctl power on')
             end
          end
       )

@@ -174,7 +174,7 @@ keys.globalkeys = gears.table.join(
    ),
    
    -- window selector
-   awful.key({modkey}, "BackSpace",
+   awful.key({modkey}, "Shift_R",
       function()
          awful.spawn.with_shell(DIR .. "/rofi/bin/windows")
       end,
