@@ -19,7 +19,6 @@ local dpi = require("beautiful").xresources.apply_dpi
 
 local PATH_TO_ICONS = os.getenv("HOME") .. "/.config/awesome/icons/bluetooth/"
 local checker
-local naughty = require("naughty")
 
 -- ===================================================================
 -- Initialization

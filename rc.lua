@@ -42,7 +42,8 @@ apps = {
    network_manager = "nm-connection-editor", -- recommended: nm-connection-editor
    power_manager = "xfce4-power-manager -c", -- recommended: xfce4-power-manager
    terminal = "konsole",
-   terminal2 = "alacritty  --class alacritty-bottom,alacritty-bottom --config-file " .. DIR .. "/rofi/alacritty-cfg/alacritty.yml",
+   -- terminal2 = "alacritty  --class alacritty-bottom,alacritty-bottom --config-file " .. DIR .. "/rofi/alacritty-cfg/alacritty.yml",
+   terminal2 = "alacritty --class alacritty-bottom,alacritty-bottom --config-file /home/giygas/.config/alacritty/alacritty.yml",
    launcher = DIR .. "/rofi/bin/launcher",
    lock = lock_script,
    screenshot = "scrot -e 'mv $f ~/Pictures/Screenshots 2>/dev/null'",
@@ -66,6 +67,7 @@ local run_on_start_up = {
    "redshift -c ~/.config/redshift.conf",
    "easyeffects --gapplication-service",
    "xss-lock --transfer-sleep-lock -- " .. lock_script,
+   "transmission-daemon"
    -- "steam",
    -- "firefox",
    -- "vscodium",

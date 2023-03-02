@@ -145,12 +145,15 @@ function rules.create(clientkeys, clientbuttons)
                "Qalculate-gtk",
                "EasyEffects",
                "Thunar",
+               "Places",
+               "places"
             },
             name = {
                "Event Tester",
                "Steam Guard - Computer Authorization Required",
                "EasyEffects",
-               "Alacritty_c" -- Centered Alacritty floating in center
+               "Alacritty_c", -- Centered Alacritty floating in center
+               "Library"
             },
             role = {
                "pop-up",
@@ -167,10 +170,15 @@ function rules.create(clientkeys, clientbuttons)
       {
          rule_any = {
             -- Normal Alacritty floating in bottom right
-            name = {
-               "Alacritty_n"
+
+            class = {
+               "alacritty-bottom"
+            },
+         }, properties = {
+               floating = true, 
+               placement = awful.placement.no_offscreen + awful.placement.top_right,
+               margins = 20
             }
-         }, properties = {floating = true, placement = awful.placement.bottom_right}
       },
       
       

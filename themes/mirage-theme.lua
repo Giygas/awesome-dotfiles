@@ -96,7 +96,7 @@ theme.layout_tile = "~/.config/awesome/icons/layouts/tiled.png"
 theme.layout_floating = "~/.config/awesome/icons/layouts/floating.png"
 theme.layout_max = "~/.config/awesome/icons/layouts/maximized.png"
 
-theme.icon_theme = "Tela-dark"
+-- theme.icon_theme = "Tela-dark" // Test for letting the system set the default icon theme
 
 
 -- ===================================================================
@@ -104,7 +104,7 @@ theme.icon_theme = "Tela-dark"
 -- ===================================================================
 
 
-theme.titlebars_enabled = true
+theme.titlebars_enabled = false
 
 local icon_dir = gears.filesystem.get_configuration_dir() .. "/icons/titlebar/"
 

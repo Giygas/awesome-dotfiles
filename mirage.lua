@@ -25,8 +25,12 @@ local mirage = {}
 
 
 mirage.initialize = function()
+   -- Put here the name of the wallpaper
+   local wallpaper_path = gears.filesystem.get_configuration_dir() .. "/wallpaper/eva01.png"
+   
    -- Set Wallpaper
-   gears.wallpaper.maximized(gears.filesystem.get_configuration_dir() .. "/wallpaper/sif.png")
+   awful.spawn("magick " .. wallpaper_path .. " -blur 0x24 ".. gears.filesystem.get_configuration_dir() .."/wallpaper/blurred_wallpaper.png")
+   gears.wallpaper.maximized(wallpaper_path)
 
    -- Import components
    require("components.exit-screen")
